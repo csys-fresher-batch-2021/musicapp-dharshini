@@ -1,10 +1,10 @@
 package in.dharshini.service;
 
 import java.util.ArrayList;
-//import java.util.List;
+import java.util.List;
 
-public class LanguageList {
-	static ArrayList<String> languages = new ArrayList<String>();
+class LanguageList {
+	public static List<String> languages = new ArrayList<>();
 
 	/**
 	 * This static block adds available languages to array list
@@ -18,7 +18,7 @@ public class LanguageList {
 	 * This method adds the available languages to the array list and displays
 	 * @return 
 	 */
-	public static ArrayList<String> displayAvailableLanguages() {
+	public static List<String> displayAvailableLanguages() {
 		for (String list : languages) {
 			System.out.println(list);
 		}
