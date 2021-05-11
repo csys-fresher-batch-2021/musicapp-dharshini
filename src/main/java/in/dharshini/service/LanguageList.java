@@ -3,8 +3,8 @@ package in.dharshini.service;
 import java.util.ArrayList;
 import java.util.List;
 
-class LanguageList {
-	public static List<String> languages = new ArrayList<>();
+public class LanguageList {
+	private static  List<String> languages = new ArrayList<>();
 
 	/**
 	 * This static block adds available languages to array list
@@ -24,5 +24,4 @@ class LanguageList {
 		}
 		return languages;
 	}
-
 }
