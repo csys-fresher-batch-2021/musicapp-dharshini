@@ -1,6 +1,9 @@
 <%@page import="java.util.List"%>
-<%@page import="in.dharshini.service.LanguageList"%>
-<html>
+<%@page import="in.dharshini.service.LanguageService"%>
+<%@page import="in.dharshini.model.Language"%>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <title>MusicApp</title>
 <style>
@@ -20,14 +23,14 @@
 				</h3>
 				<br />
 				<%
-				List<String> languageName = LanguageList.displayAvailableLanguages();
+				List<Language> languageList = LanguageService.getLanguages();
 				%>
 				<select name="languages">
 					<option disabled selected>--Select language--</option>
 					<%
-					for (String language : languageName) {
+					for (Language language : languageList) {
 					%>
-					<option value="<%=language%>"><%=language%></option>
+					<option value="<%=language.getLanguageName()%>"><%=language.getLanguageName()%></option>
 					<%
 					}
 					%>
