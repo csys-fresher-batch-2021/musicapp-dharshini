@@ -4,11 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class LanguageListTest {
+public class LanguageServiceTest {
 
 	@Test
 	public void test() {
-		int arrayListSize = LanguageList.displayAvailableLanguages().size();
+		int arrayListSize = LanguageService.getLanguages().size();
 		assertEquals(2,arrayListSize);
 	}
 }
