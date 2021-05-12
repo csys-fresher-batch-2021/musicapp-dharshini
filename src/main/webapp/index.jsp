@@ -1,20 +1,24 @@
-<%@page import="java.util.Date"%>
-<%@page import="java.time.LocalDate"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>MyApp</title>
+<title>MusicApp</title>
+<style>
+.center {
+	text-align: center;
+	padding: 70px 0;
+}
+</style>
 </head>
 <body>
-	<jsp:include page="header.jsp"></jsp:include>
-	<main class="container-fluid">
-		<h3>Welcome To Project</h3>
-		
-		<c:out value="Hello" />
-		<c:set var="now" value="<%=new Date()%>" />
-		<fmt:formatDate type="date" pattern="yyyy-MM-dd" value="${now}" />
-
+		<jsp:include page="header.jsp"></jsp:include>
+		<main class="container-fluid">
+		<div class="center">
+			 <h2>Welcome To DG MusicApp</h2><br/><br/>
+			<h4>Enjoy The Essence Of Music!</h4><br/><br/><br/>
+			<h5><a href = "Login.jsp">Login</a> To Listen To Your Favourite Songs!</h5>
+			
+			
+		</div>
 	</main>
 </body>
 </html>
