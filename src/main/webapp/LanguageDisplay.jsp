@@ -18,9 +18,7 @@
 	<main class="container-fluid">
 		<form>
 			<div class="center">
-				<h3>
-					<font style="color: blue">List Of Available Languages</font>
-				</h3>
+				<h3>List Of Available Languages</h3>
 				<br />
 				<%
 				List<Language> languageList = LanguageService.getLanguages();

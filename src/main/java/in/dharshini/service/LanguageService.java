@@ -26,10 +26,4 @@ public class LanguageService {
 	public static List<Language> getLanguages() {
 		return languageList;
 	}
-	
-	public static void displayAvailableLanguages() {
-		for (Language list : languageList) {
-			System.out.println(list);
-		}
-	}
 }
