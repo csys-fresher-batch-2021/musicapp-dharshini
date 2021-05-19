@@ -28,17 +28,20 @@ public class LoginService {
 		registeredList.put("gokul@gmail.com", user4);
 	}
 
-	public static Map<String,String> getAllRegisteredUser() {
-		Map<String,String> usersList = new HashMap<>(); ;
+	public static Map<String, String> getAllRegisteredUser() {
+		Map<String, String> usersList = new HashMap<>();
 		Set<String> mail = registeredList.keySet();
-		for(String s : mail) {
-			User user = registeredList.get(s);
-			usersList.put(s,user.getPassword());
+		try {
+			for (String s : mail) {
+				User user = registeredList.get(s);
+				usersList.put(s, user.getPassword());
+			}
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 		return usersList;
 	}
 
-	
 	/**
 	 * This method validates whether the user is registered user or not with the
 	 * help of login details
@@ -57,8 +60,9 @@ public class LoginService {
 				isValid = true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e);
 		}
+
 		return isValid;
 	}
 
@@ -74,10 +78,14 @@ public class LoginService {
 
 	public static boolean isValidLogin(String inputMailId, String inputPassword) {
 		boolean isExist = false;
-		// email validation is done
-		if ((StringValidator.verifyEmail(inputMailId)) && (StringValidator.verifyPassword(inputPassword))) {
-			isExist = true;
+		try {
+			if ((StringValidator.verifyEmail(inputMailId)) && (StringValidator.verifyPassword(inputPassword))) {
+				isExist = true;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 		return isExist;
 	}
+
 }

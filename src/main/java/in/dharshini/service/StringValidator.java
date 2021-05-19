@@ -2,13 +2,14 @@ package in.dharshini.service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.validator.routines.EmailValidator;
 
 public class StringValidator {
 	
 	private StringValidator() {
 		// default constructor
 	}
-
+	
 	/**
 	 * This method validates whether the user input mail id is in correct format or
 	 * not
@@ -17,26 +18,35 @@ public class StringValidator {
 	 * @return
 	 */
 
-	public static boolean verifyEmail(String newUserEmail) {
-		if (newUserEmail == null || newUserEmail.trim().equals("") || (!newUserEmail.trim().matches(
-				"^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"))) {
-			return false;
-		}
-		return true;
-
+	public static boolean verifyEmail(String newUserMail) {
+		EmailValidator eValidator = EmailValidator.getInstance();
+		return (eValidator.isValid(newUserMail));
 	}
 
+	/**
+	 * This method validates whether the user input password is in correct and
+	 * required format or not
+	 * 
+	 * @param newUserPassword
+	 * @return
+	 */
+
 	public static boolean verifyPassword(String newUserPassword) {
-		if (newUserPassword == null || newUserPassword.trim().equals("")) {
-			return false;
+		Matcher matcher;
+		boolean isValid = false;
+		try {
+			if (newUserPassword == null || newUserPassword.trim().equals("")) {
+				return false;
+			}
+			String regexPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>])(?!.*\\s).{8,20}$";
+			Pattern pattern = Pattern.compile(regexPattern);
+			// digit + lowercase char + uppercase char + punctuation + symbol
+			matcher = pattern.matcher(newUserPassword);
+			isValid = matcher.matches();
+		} catch (Exception e) {
+			System.out.println(e);
 		}
-		String passwordPatternRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>])(?!.*\\s).{8,20}$";
-
-		Pattern pattern = Pattern.compile(passwordPatternRegex);
-		// digit + lowercase char + uppercase char + punctuation + symbol
-
-		Matcher matcher = pattern.matcher(newUserPassword);
-		return matcher.matches();
+		return isValid;
 	}
 
 	/**

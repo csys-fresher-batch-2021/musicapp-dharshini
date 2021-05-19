@@ -15,10 +15,6 @@
 	<main class="container-fluid">
 
 		<div class="center">
-			<%
-			String errorMessage = request.getParameter("errormessage");
-			%>
-
 			<form method="POST" action="LoginServlet">
 				<h1>Login</h1>
 				<label>Email Id</label> <input type="email"
@@ -29,9 +25,15 @@
 				<button class="btn btn-primary" type="submit">Submit</button>
 				<button class="btn btn-danger" type="reset">Reset</button>
 				<br />
+				<%@ page import="org.owasp.encoder.Encode"%>
+
 				<%
-				if (errorMessage != null) {
-					out.println("<font color='red'>" + errorMessage + "</font>");
+				String message=request.getParameter("errormessage");
+				if (message != null) {
+				String encodedString = Encode.forHtml(message);
+				//	String encodedName = org.owasp.encoder.Encode.forHtml(errorMessage);
+
+					out.println("<font color='red'>" + encodedString + "</font>");
 				}
 				%>
 				<br> <br> <br> New to DGMusicz? <a
@@ -42,4 +44,3 @@
 	</main>
 </body>
 </html>
-

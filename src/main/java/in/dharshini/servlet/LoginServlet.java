@@ -17,23 +17,26 @@ import in.dharshini.service.LoginService;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String emailId = request.getParameter("emailid");
 		String password = request.getParameter("password");
 
-		try {
 		boolean isValid = LoginService.loginDetailCheck(emailId, password);
-			if (isValid) {
-				// HttpSession session = request.getSession();
-				// session.setAttribute("LOGGED_IN_USER", emailId);
+		if (isValid) {
+			try {
 				response.sendRedirect("Language.jsp");
-			} else {
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		} else {
+			try {
 				String errormessage = "Invalid Login Credentials";
 				response.sendRedirect("Login.jsp?errormessage=" + errormessage);
+			} catch (Exception e) {
+				System.out.println(e);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 }
