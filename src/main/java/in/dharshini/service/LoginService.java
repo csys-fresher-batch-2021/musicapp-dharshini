@@ -79,7 +79,7 @@ public class LoginService {
 	public static boolean isValidLogin(String inputMailId, String inputPassword) {
 		boolean isExist = false;
 		try {
-			if ((StringValidator.verifyEmail(inputMailId)) && (StringValidator.verifyPassword(inputPassword))) {
+			if ((InputValidator.isValidEmail(inputMailId)) && (InputValidator.isValidPassword(inputPassword))) {
 				isExist = true;
 			}
 		} catch (Exception e) {

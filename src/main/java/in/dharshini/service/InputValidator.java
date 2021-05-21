@@ -20,7 +20,7 @@ public class InputValidator {
 	public static boolean isValidMailIdAndPassword(String inputMailId, String inputPassword) {
 		boolean isExist = false;
 		try {
-			if ((InputValidator.isValidEmail(inputMailId)) && (InputValidator.idValidPassword(inputPassword))) {
+			if ((InputValidator.isValidEmail(inputMailId)) && (InputValidator.isValidPassword(inputPassword))) {
 				isExist = true;
 			}
 		} catch (Exception e) {
@@ -50,7 +50,7 @@ public class InputValidator {
 	 * @return
 	 */
 
-	public static boolean idValidPassword(String newUserPassword) {
+	public static boolean isValidPassword(String newUserPassword) {
 		Matcher matcher;
 		boolean isValid = false;
 		try {
