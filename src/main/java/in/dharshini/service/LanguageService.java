@@ -30,12 +30,6 @@ public class LanguageService {
 	public static List<Language> getLanguages() {
 		return languageList;
 	}
-
-	public static void redirectMethod(String language) {
-		if(language.equals("Tamil")) {
-			
-		}
-	}
 }
 
 
