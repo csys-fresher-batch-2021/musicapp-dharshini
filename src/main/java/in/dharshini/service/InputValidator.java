@@ -4,15 +4,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.validator.routines.EmailValidator;
 
+import in.dharshini.util.Logger;
+
 public class InputValidator {
-	
+
 	private InputValidator() {
 		// default constructor
 	}
 
 	/**
-	 * This method validates whether both the user input mail id and password is in correct format or
-	 * not
+	 * This method validates whether both the user input mail id and password is in
+	 * correct format or not
+	 * 
 	 * @param inputMailId
 	 * @param inputPassword
 	 * @return
@@ -24,11 +27,11 @@ public class InputValidator {
 				isExist = true;
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			Logger.println(e);
 		}
 		return isExist;
 	}
-	
+
 	/**
 	 * This method validates whether the user input mail id is in correct format or
 	 * not
@@ -36,7 +39,7 @@ public class InputValidator {
 	 * @param newUserEmail
 	 * @return
 	 */
-	
+
 	public static boolean isValidEmail(String newUserMail) {
 		EmailValidator eValidator = EmailValidator.getInstance();
 		return (eValidator.isValid(newUserMail));
@@ -63,7 +66,7 @@ public class InputValidator {
 			matcher = pattern.matcher(newUserPassword);
 			isValid = matcher.matches();
 		} catch (Exception e) {
-			System.out.println(e);
+			Logger.println(e);
 		}
 		return isValid;
 	}
@@ -78,5 +81,4 @@ public class InputValidator {
 		}
 		return isValid;
 	}
-
 }

@@ -28,6 +28,11 @@ String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 					href="Login.jsp">Login</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="Registration.jsp">Register</a>
+				<li class="nav-item"><a class="nav-link" href="SearchSong.jsp">Search
+						Song</a></li>
+
+				<li class="nav-item"><a class="nav-link" href="SearchSong.jsp">Create
+						Playlist</a>
 				<li class="nav-item"><a class="nav-link" href="index.jsp">Logout</a></li>
 
 
