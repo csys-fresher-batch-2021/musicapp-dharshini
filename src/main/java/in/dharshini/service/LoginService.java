@@ -45,10 +45,10 @@ public class LoginService {
 	public static boolean checkUser(String inputMailId, String inputPassword) {
 		boolean isValid = false;
 		try {
-			Set<String> mail = LoginDAO.getAllRegisteredUser().keySet();
-			for (String password : mail) {
-				String user = LoginDAO.getAllRegisteredUser().get(password);
-				if (inputMailId.equals(password) && inputPassword.equals(user)) {
+			Set<String> mailSet = LoginDAO.getAllRegisteredUser().keySet();
+			for (String mail : mailSet) {
+				String password = LoginDAO.getAllRegisteredUser().get(mail);
+				if (inputMailId.equals(mail) && inputPassword.equals(password)) {
 					isValid = true;
 					break;
 				}

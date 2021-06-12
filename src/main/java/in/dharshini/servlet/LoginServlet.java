@@ -19,7 +19,6 @@ import in.dharshini.util.Logger;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
 	/**
 	 * This doPost() is used to get mailId and Password and check for registration
 	 * in loginService amd redirect to language.jsp if registered user or redirect
@@ -35,14 +34,14 @@ public class LoginServlet extends HttpServlet {
 		if (isValid) {
 			try {
 				response.sendRedirect("Language.jsp");
-			} catch (Exception e) {
+			} catch (IOException e) {
 				Logger.println(e);
 			}
 		} else {
 			try {
 				String errormessage = "Invalid Login Credentials";
 				response.sendRedirect("Login.jsp?errormessage=" + errormessage);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				Logger.println(e);
 			}
 		}

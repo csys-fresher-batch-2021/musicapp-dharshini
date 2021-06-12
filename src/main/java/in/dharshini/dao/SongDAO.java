@@ -30,14 +30,12 @@ public class SongDAO {
 			pst.executeUpdate();
 
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
 			throw new DBException(e, "Unable to add song in db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
 	}
 
-//"insert into songs (language_id,movie_id,song,song_link) values (?,?,?,?)";
 	public static List<Song> getAllSongs(Integer movieId) throws DBException {
 		final List<Song> songsList = new ArrayList<>();
 		Connection connection = null;
@@ -56,7 +54,6 @@ public class SongDAO {
 				songsList.add(song);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
 			throw new DBException(e, "Sorry. Cannot List user details from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
@@ -81,8 +78,7 @@ public class SongDAO {
 				link = song;
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			throw new DBException(e, "Sorry. Cannot List user details from db");
+			throw new DBException(e, "Sorry. Cannot List song details from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}

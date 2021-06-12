@@ -18,7 +18,6 @@ public class LoginDAO {
 	}
 
 	public static void addUser(User user) throws DBException {
-
 		Connection connection = null;
 		PreparedStatement pst = null;
 		try {
@@ -32,7 +31,6 @@ public class LoginDAO {
 			pst.executeUpdate();
 
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
 			throw new DBException(e, "Unable to add new user in db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
@@ -47,7 +45,7 @@ public class LoginDAO {
 		try {
 			connection = ConnectionUtil.getConnection();
 			// Step 2: Query Statement
-			String sql = "select * from users";
+			String sql = "select email,password from users";
 			// Step 3: Execute Query
 			pst = connection.prepareStatement(sql);
 			ResultSet result = pst.executeQuery();
@@ -57,7 +55,6 @@ public class LoginDAO {
 				userMap.put(mailId, passWord);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
 			throw new DBException(e,"Sorry. Cannot List user details from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);

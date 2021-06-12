@@ -1,3 +1,4 @@
+<%@ page import="org.owasp.encoder.Encode"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +21,8 @@
 			<%
 			String errorMessage = request.getParameter("errormessage");
 			if (errorMessage != null) {
-				out.println("<font color='red'>" + errorMessage + "</font>");
+				String encodedString = Encode.forHtml(errorMessage);
+				out.println("<font color='red'>" + encodedString + "</font>");
 			}
 			%>
 			<form method="POST" action="RegistrationServlet">

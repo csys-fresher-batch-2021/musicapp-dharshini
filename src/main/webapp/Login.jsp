@@ -1,4 +1,3 @@
-
 <%@ page import="org.owasp.encoder.Encode"%>
 <!DOCTYPE html>
 <html lang="en">

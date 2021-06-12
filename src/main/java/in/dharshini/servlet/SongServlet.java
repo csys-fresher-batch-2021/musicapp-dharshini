@@ -19,12 +19,13 @@ public class SongServlet extends HttpServlet {
 	/**
 	 * This doGet() gets song from song.jsp redirect to download.jsp with songId
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
 			String songId = request.getParameter("songs");
 			response.sendRedirect("Download.jsp?songId=" + songId);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			Logger.println(e);
 		}
 	}

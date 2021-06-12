@@ -1,4 +1,5 @@
 package in.dharshini.dao;
+
 import in.dharshini.model.Language;
 
 import java.sql.Connection;
@@ -29,7 +30,6 @@ public class LanguageDAO {
 			pst.executeUpdate();
 
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
 			throw new DBException(e, "Unable to add language in db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
@@ -40,7 +40,7 @@ public class LanguageDAO {
 		List<Language> languageList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pst = null;
-		
+
 		try {
 			connection = ConnectionUtil.getConnection();
 			String sql = "select language_id,language from languages";
@@ -49,12 +49,11 @@ public class LanguageDAO {
 			while (result.next()) {
 				Integer languageId = result.getInt("language_id");
 				String language = result.getString("language");
-				Language lang = new Language(language,languageId);
+				Language lang = new Language(language, languageId);
 				languageList.add(lang);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			throw new DBException(e, "Sorry. Cannot List user details from db");
+			throw new DBException(e, "Sorry. Cannot List language details from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}

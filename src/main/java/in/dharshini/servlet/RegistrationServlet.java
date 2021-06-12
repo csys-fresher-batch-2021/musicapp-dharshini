@@ -37,7 +37,7 @@ public class RegistrationServlet extends HttpServlet {
 				String errormessage = "Already registered User or Invalid Registration Credentials";
 				response.sendRedirect("Registration.jsp?errormessage=" + errormessage);
 			}
-		} catch (DBException e) {
+		} catch (DBException | IOException e) {
 			Logger.println(e);
 		}
 	}

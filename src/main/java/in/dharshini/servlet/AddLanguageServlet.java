@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import in.dharshini.model.Language;
 import in.dharshini.service.LanguageService;
 import in.dharshini.userexception.DBException;
+import in.dharshini.util.Logger;
 
 /**
  * Servlet implementation class AddLanguageServlet
@@ -21,14 +22,14 @@ public class AddLanguageServlet extends HttpServlet {
 	/** This doGet() is used to get language parameter from AddLanguage.jsp and adds that language into database
 	 * 
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String languageName = request.getParameter("language");
 		Language langName = new Language(languageName);
 		try {
 			LanguageService.addLanguage(langName);
 			response.sendRedirect("Language.jsp");
-		} catch (DBException e) {
-			e.printStackTrace();
-		}
+		} catch (DBException | IOException e) {
+			Logger.println(e);		}
 	}
 }

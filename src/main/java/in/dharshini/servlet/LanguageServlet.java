@@ -21,13 +21,14 @@ public class LanguageServlet extends HttpServlet {
 	 * languageId to Movie.jsp
 	 * 
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
 			String languageId = request.getParameter("languages");
 
 			response.sendRedirect("Movie.jsp?languageId=" + languageId);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			Logger.println(e);
 		}
 	}

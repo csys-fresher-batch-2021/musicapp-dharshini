@@ -28,13 +28,10 @@ public class SearchSongDAO {
 			while (result.next()) {
 				String searchedSongLink = result.getString("song_link");
 				String searchedSong = result.getString("song");
-				 songAndLink = new Song(searchedSongLink,searchedSong);
-				//songAndLink = songLink;
-				//System.out.println(songLink);
+				songAndLink = new Song(searchedSongLink, searchedSong);
 			}
 		} catch (ClassNotFoundException | NullPointerException | SQLException e) {
-			e.printStackTrace();
-			throw new DBException(e, "Sorry. Cannot List user details from db");
+			throw new DBException(e, "Sorry. Cannot List searched song details from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}

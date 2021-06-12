@@ -29,7 +29,6 @@ public class MovieDAO {
 			pst.executeUpdate();
 
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
 			throw new DBException(e, "Unable to add movie in db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
@@ -54,8 +53,7 @@ public class MovieDAO {
 				moviesList.add(movie);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			throw new DBException(e, "Sorry. Cannot List user details from db");
+			throw new DBException(e, "Sorry. Cannot List movie details from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}

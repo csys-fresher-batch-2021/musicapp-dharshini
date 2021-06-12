@@ -1,3 +1,4 @@
+<%@ page import="org.owasp.encoder.Encode"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="in.dharshini.model.Song"%>
@@ -37,22 +38,26 @@
 				<%
 				String errorMessage = request.getParameter("errorMessage");
 				if (errorMessage != null) {
-					out.println(errorMessage);
+					String encodedErrorMessage = Encode.forHtml(errorMessage);
+					out.println(encodedErrorMessage);
 				} else {
 					String searchedSong = (String) request.getAttribute("searchedSong");
+					String encodedString = Encode.forHtml(searchedSong);
 					Song songLink = (Song) request.getAttribute("songLink");
+					session.setAttribute("song",searchedSong);
+					session.setAttribute("songLink",songLink);
+
 					if (searchedSong != null) {
 				%>
 				<h3>Result For The Search</h3>
 
 				<div class="c">
 					Song :
-					<%=searchedSong%>
+					<%=encodedString%>
 				</div>
 				<br /> <a class="btn btn-primary"
 					href=" <%=songLink.getSongLink()%>" role="button">Play</a> <br />
-				<br /> Want To Add The Song To A Playlist? <a href=" Playlist.jsp">Click
-					Here </a>
+				<br />
 
 				<%
 				}

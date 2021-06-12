@@ -16,7 +16,6 @@ public class LanguageService {
 	 * @throws DBException
 	 */
 	public static void addLanguage(Language langName) throws DBException {
-		// TODO: add input validator check
 		LanguageDAO.addLanguages(langName);
 	}
 
@@ -27,7 +26,6 @@ public class LanguageService {
 	 * @throws DBException
 	 */
 	public List<Language> getLanguages() throws DBException {
-		// TODO: add input validator check
 		return LanguageDAO.getAllLanguages();
 	}
 }

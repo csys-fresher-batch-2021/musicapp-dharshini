@@ -21,12 +21,13 @@ public class MovieServlet extends HttpServlet {
 	 * This doGet() is used to get movies from movie.jsp and redirect the movieId to
 	 * song.jsp
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
 			String movieId = request.getParameter("movies");
 			response.sendRedirect("Song.jsp?movieId=" + movieId);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			Logger.println(e);
 		}
 	}

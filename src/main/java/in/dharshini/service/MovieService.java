@@ -16,7 +16,6 @@ public class MovieService {
 	 * @throws DBException
 	 */
 	public void addMovies(Movie movieName) throws DBException {
-		// TODO: add input validator check
 		MovieDAO.addMovies(movieName);
 	}
 
@@ -28,7 +27,6 @@ public class MovieService {
 	 * @throws DBException
 	 */
 	public List<Movie> getMovies(Integer languageId) throws DBException {
-		// TODO: add input validator check
 		return MovieDAO.getAllMovies(languageId);
 	}
 }
