@@ -1,5 +1,4 @@
 <%@ page import="org.owasp.encoder.Encode"%>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +18,13 @@
 	<main class="container-fluid">
 
 		<div class="center">
-
+			<%
+			String errorMessage = request.getParameter("errormessage");
+			if (errorMessage != null) {
+				String encodedString = Encode.forHtml(errorMessage);
+				out.println("<font color='red'>" + encodedString + "</font>");
+			}
+			%>
 			<form method="POST" action="RegistrationServlet">
 				<h1>Registration</h1>
 				<br /> <label>First Name</label> <input type="text" name="fName"
@@ -37,15 +42,6 @@
 					id="M" required>Male <input type="radio" name="male" id="F"
 					required>Female <br> <br>
 				<button class="btn btn-secondary" type="submit">Submit</button>
-<br/><br/>
-				<%
-				String errorMessage = request.getParameter("errormessage");
-				if (errorMessage != null) {
-					String encodedString = Encode.forHtml(errorMessage);
-
-					out.println("<font color='red'>" + encodedString + "</font>");
-				}
-				%>
 				<br /> <br /> <br> <br> Already Signed In? <a
 					href="Login.jsp">Login</a>
 

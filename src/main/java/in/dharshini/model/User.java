@@ -4,29 +4,30 @@ public class User {
 	private String mailId;
 	private String password;
 
-	private String newMailId;
-	
-	public User(String password) {
-		this.password = password;
-	}
-
-	public void setMailId(String mailId) {
+	public User(String mailId, String password) {
+		super();
 		this.mailId = mailId;
+		this.password = password;
 	}
 
 	public String getMailId() {
 		return mailId;
 	}
 
+	public void setMailId(String mailId) {
+		this.mailId = mailId;
+	}
+
 	public String getPassword() {
 		return password;
 	}
 
-	public String getNewMailId() {
-		return newMailId;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public void setNewMailId(String newMailId) {
-		this.newMailId = newMailId;
+	@Override
+	public String toString() {
+		return "User [mailId=" + mailId + ", password=" + password + "]";
 	}
 }

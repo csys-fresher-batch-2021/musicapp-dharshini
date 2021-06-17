@@ -1,46 +1,31 @@
 package in.dharshini.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import in.dharshini.dao.LanguageDAO;
 import in.dharshini.model.Language;
+import in.dharshini.userexception.DBException;
 
 public class LanguageService {
 
-	private LanguageService() {
-		// default constructor
+	/**
+	 * This method calls the addLanguages() in language DAO to add languages to the
+	 * database
+	 * 
+	 * @param langName
+	 * @throws DBException
+	 */
+	public static void addLanguage(Language langName) throws DBException {
+		LanguageDAO.addLanguages(langName);
 	}
 
 	/**
-	 * This method adds the available languages to the array list
+	 * This method Calls getAllLanguages() in language DAO to get List of languages
 	 * 
 	 * @return
+	 * @throws DBException
 	 */
-	private static final List<Language> languageList = new ArrayList<>();
-
-	static {
-		Language language1 = new Language("Tamil");
-		Language language2 = new Language("Hindi");
-
-		languageList.add(language1);
-		languageList.add(language2);
-
-	}
- 
-	public static List<Language> getLanguages() {
-		return languageList;
+	public List<Language> getLanguages() throws DBException {
+		return LanguageDAO.getAllLanguages();
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

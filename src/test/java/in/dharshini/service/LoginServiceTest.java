@@ -5,14 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-
-/**
- *below methods tests whether the user is registered user or not
- * @author dhar2623
- *
- */
-
-public class RegistrationServiceTest {
+public class LoginServiceTest {
+	/**
+	 * Below method checks whether the user details is already registered or not
+	 */
 	@Test
 	public void CorrectMailidAndPassword() {
 		String inputMailId = "dharshu@gmail.com";
@@ -47,4 +43,5 @@ public class RegistrationServiceTest {
 		String inputPassword = "123ABC#*";
 		assertFalse(LoginService.checkUser(inputMailId, inputPassword));
 	}
+
 }
