@@ -7,6 +7,14 @@ public class Song {
 	private Integer songId;
 	private String songLink;
 
+	public Song(Integer languageid, Integer movieId, String songName, String songLink) {
+		super();
+		this.songName = songName;
+		this.languageid = languageid;
+		this.movieId = movieId;
+		this.songLink = songLink;
+	}
+
 	public Song(String songLink, String songName) {
 		super();
 		this.songLink = songLink;
@@ -14,9 +22,9 @@ public class Song {
 
 	}
 
-	public Song(String songLink) {
+	public Song(String songName) {
 		super();
-		this.songLink = songLink;
+		this.songName = songName;
 
 	}
 

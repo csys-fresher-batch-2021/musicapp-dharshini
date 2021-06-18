@@ -2,7 +2,7 @@ package in.dharshini.service;
 
 import java.util.Set;
 
-import in.dharshini.dao.LoginDAO;
+import in.dharshini.dao.UserDAO;
 import in.dharshini.model.User;
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
@@ -24,9 +24,9 @@ public class RegistrationService {
 	 */
 	public static boolean checkNotRegisteredUser(User user) throws DBException {
 		boolean isValid = false;
-		if((InputValidator.isValidMailIdAndPassword(user.getMailId(), user.getPassword())) && !(LoginService.checkUser(user.getMailId(), user.getPassword()))){
+		if((InputValidator.isValidMailIdAndPassword(user.getMailId(), user.getPassword())) && !(LoginService.checkUserForLogin(user.getMailId(), user.getPassword()))){
 			isValid=true;
-			LoginDAO.addUser(user);
+			UserDAO.addUser(user);
 		}
 		return isValid;
 	}
@@ -40,9 +40,9 @@ public class RegistrationService {
 	public static boolean checkUser(String inputMailId, String inputPassword) {
 		boolean isValid = false;
 		try {
-			Set<String> mail = LoginDAO.getAllRegisteredUser().keySet();
+			Set<String> mail = UserDAO.getAllRegisteredUser().keySet();
 			for (String password : mail) {
-				String user = LoginDAO.getAllRegisteredUser().get(password);
+				String user = UserDAO.getAllRegisteredUser().get(password);
 				if (inputMailId.equals(password) && inputPassword.equals(user)) {
 					isValid = true;
 					break;

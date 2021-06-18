@@ -1,4 +1,6 @@
 <%@ page import="org.owasp.encoder.Encode"%>
+<%@page import="in.dharshini.model.User"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +24,8 @@
 					placeholder="Enter Valid Emailid" name="emailid" id="emailid"
 					required autofocus /><br> <br> <label>Password</label> <input
 					type="password" placeholder="Enter your Password" name="password"
-					id="password" required /> <br /> <br />
+					id="password" required /> <br /> <br/>
+					<a href="forgotPassword.jsp"> Forgot Password?</a><br/><br/>
 				<button class="btn btn-primary" type="submit">Submit</button>
 				<button class="btn btn-danger" type="reset">Reset</button>
 				<br />

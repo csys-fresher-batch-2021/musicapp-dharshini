@@ -4,10 +4,13 @@
 
 
 <%
-String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
+String role = (String) session.getAttribute("ROLE");
+String adminEmail = (String) session.getAttribute("adminEmail");
 %>
 
-
+<%
+if (role.equals("ADMIN")) {
+%>
 <header>
 	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">MusicApp</a>
@@ -21,38 +24,22 @@ String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 				<li class="nav-item active"><a class="nav-link"
 					href="index.jsp">Home <span class="sr-only">(current)</span></a></li>
-
+				<li class="nav-item "><a class="nav-link"
+					href="Login.jsp">User Login <span class="sr-only">(current)</span></a></li>
 			</ul>
 			<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 				<%
-				if (loggedInUsername == null) {
+				if (adminEmail != null) {
 				%>
-				<li class="nav-item active"><a class="nav-link"
-					href="Login.jsp">Login</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="Registration.jsp">Register</a> 
-					<li class="nav-item"><a class="nav-link"
-					href="AdminLogin.jsp">Admin</a><%
-					
- } else {
- %>
-				<li class="nav-item"><a class="nav-link" href="SearchSong.jsp">Search
-						Song</a></li>
-				<li class="nav-item"><a class="nav-link" href="SearchSong.jsp">Create
-						Playlist</a>
-				<li class="nav-item"><a class="nav-link" href="/app/PlaylistServlet">My
-						Playlist</a> <%
- }
- %> <%
- if (loggedInUsername != null) {
- %>
-				<li class="nav-item active"><a class="nav-link">Welcome <%=loggedInUsername%></a></li>
+				<li class="nav-item active"><a class="nav-link">Welcome <%=adminEmail%></a></li>
 				<li class="nav-item"><a class="nav-link" href="LogoutServlet">Logout</a></li>
 				<%
 				}
 				%>
 			</ul>
-
 		</div>
 	</nav>
 </header>
+<%
+}
+%>

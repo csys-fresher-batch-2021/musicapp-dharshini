@@ -15,8 +15,17 @@ public class SongService {
 	 * @param songName
 	 * @throws DBException
 	 */
-	public static void addSong(Song songName) throws DBException {
-		SongDAO.addSong(songName);
+	public static boolean addSong(Song songName) {
+		return SongDAO.addSong(songName);
+	}
+	
+	/**
+	 * This method is used to delete a song from database
+	 * @param songName
+	 * @return
+	 */
+	public boolean removeSongs(Song songName) {
+		return SongDAO.removeSongs(songName);
 	}
 
 	/**
@@ -38,7 +47,7 @@ public class SongService {
 	 * @throws DBException
 	 */
 	public Song getSongLink(Integer songId) throws DBException {
-		return SongDAO.getSongLink(songId);
+		return SongDAO.getSongLinkAndSong(songId);
 	}
 
 	/**

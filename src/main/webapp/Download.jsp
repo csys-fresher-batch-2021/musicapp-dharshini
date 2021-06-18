@@ -13,6 +13,9 @@
 	text-align: center;
 	padding: 70px 0;
 }
+.c {
+	font-size: 150%;
+}
 </style>
 </head>
 <body>
@@ -28,7 +31,11 @@
 				SongService songService = new SongService();
 				Song song = songService.getSongLink(songId);
 				%>
-				<a href="<%=song.getSongLink()%>">Click here to download</a>
+				<div class ="c">
+					Song Name:
+					<%=song.getSongName()%>
+				</div>
+				<br /> <a href="<%=song.getSongLink()%>">Click here to download</a>
 			</div>
 		</form>
 	</main>

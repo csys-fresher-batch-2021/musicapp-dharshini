@@ -39,7 +39,6 @@
 				<button class="btn btn-secondary" type="submit">OK</button>
 
 			</div>
-			<a href="AddLanguage.jsp">Add New Languages</a>
 		</form>
 	</main>
 </body>

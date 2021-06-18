@@ -12,36 +12,36 @@ public class LoginServiceTest {
 	@Test
 	public void CorrectMailidAndPassword() {
 		String inputMailId = "dharshu@gmail.com";
-		String inputPassword = "123ABCabc*#*";
-		assertTrue(LoginService.checkUser(inputMailId, inputPassword));
+		String inputPassword = "Dharshu@123";
+		assertTrue(LoginService.checkUserForLogin(inputMailId, inputPassword));
 	}
 
 	@Test
 	public void CorrectMailidAndPassword1() {
 		String inputMailId = "sandyjooy@gmail.com";
 		String inputPassword = "SandyJooy@123";
-		assertTrue(LoginService.checkUser(inputMailId, inputPassword));
+		assertTrue(LoginService.checkUserForLogin(inputMailId, inputPassword));
 	}
 
 	@Test
 	public void IncorrectmailidAndCorrectPassword() {
 		String inputMailId = "raja@gmail.com";
 		String inputPassword = "123ABCabc*#*";
-		assertFalse(LoginService.checkUser(inputMailId, inputPassword));
+		assertFalse(LoginService.checkUserForLogin(inputMailId, inputPassword));
 	}
 
 	@Test
 	public void CorrectMailidAndIncorrectpassword() {
 		String inputMailId = "dharshu@gmail.com";
 		String inputPassword = "123ABC#*";
-		assertFalse(LoginService.checkUser(inputMailId, inputPassword));
+		assertFalse(LoginService.checkUserForLogin(inputMailId, inputPassword));
 	}
 
 	@Test
 	public void IncorrectMailidAndIncorrectpassword() {
 		String inputMailId = "rupa@gmail.com";
 		String inputPassword = "123ABC#*";
-		assertFalse(LoginService.checkUser(inputMailId, inputPassword));
+		assertFalse(LoginService.checkUserForLogin(inputMailId, inputPassword));
 	}
 
 }

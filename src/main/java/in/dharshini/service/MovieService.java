@@ -15,8 +15,13 @@ public class MovieService {
 	 * @param movieName
 	 * @throws DBException
 	 */
-	public void addMovies(Movie movieName) throws DBException {
-		MovieDAO.addMovies(movieName);
+	public boolean addMovies(Movie movieName) {
+		return MovieDAO.addMovies(movieName);
+	}
+	
+	
+	public boolean removeMovies(Movie movieName) {
+		return MovieDAO.removeMovies(movieName);
 	}
 
 	/**

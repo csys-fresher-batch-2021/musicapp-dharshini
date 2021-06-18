@@ -10,12 +10,9 @@ import java.util.Map;
 import in.dharshini.model.User;
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.ConnectionUtil;
+import in.dharshini.util.Logger;
 
-public class LoginDAO {
-
-	private LoginDAO() {
-		// Default constructor
-	}
+public class UserDAO {
 
 	public static void addUser(User user) throws DBException {
 		Connection connection = null;
@@ -37,6 +34,28 @@ public class LoginDAO {
 		}
 	}
 
+	public boolean updatePassword(User user) {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		boolean isUpdated = false;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "update users set password=? where email=?";
+
+			pst = connection.prepareStatement(sql);
+			pst.setString(1, user.getPassword());
+			pst.setString(2, user.getMailId());
+
+			pst.executeUpdate();
+			isUpdated = true;
+		} catch (ClassNotFoundException | SQLException e) {
+			Logger.println(e);
+		} finally {
+			ConnectionUtil.close(pst, connection);
+		}
+		return isUpdated;
+	}
+
 	public static Map<String, String> getAllRegisteredUser() throws DBException {
 		final Map<String, String> userMap = new HashMap<>();
 		// Step 1: get Connection
@@ -55,10 +74,33 @@ public class LoginDAO {
 				userMap.put(mailId, passWord);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new DBException(e,"Sorry. Cannot List user details from db");
+			throw new DBException(e, "Sorry. Cannot List user details from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
 		return userMap;
+	}
+
+	public User getParticularUserId(User mailId) throws DBException {
+		User userId = null;
+		Connection connection = null;
+		PreparedStatement pst = null;
+		Integer userid = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "select user_id from users where email=?";
+			pst = connection.prepareStatement(sql);
+			pst.setString(1, mailId.getMailId());
+			ResultSet result = pst.executeQuery();
+			while (result.next()) {
+				userid = result.getInt("user_id");
+				userId = new User(userid);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new DBException(e, "Sorry. Cannot get user id from db");
+		} finally {
+			ConnectionUtil.close(pst, connection);
+		}
+		return userId;
 	}
 }

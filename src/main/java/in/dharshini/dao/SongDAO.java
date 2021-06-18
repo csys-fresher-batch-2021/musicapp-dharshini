@@ -11,29 +11,54 @@ import java.util.List;
 
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.ConnectionUtil;
+import in.dharshini.util.Logger;
 
 public class SongDAO {
 	private SongDAO() {
 		// Default constructor
 	}
 
-	public static void addSong(Song songName) throws DBException {
+	public static boolean addSong(Song songName) {
 		Connection connection = null;
 		PreparedStatement pst = null;
+		boolean isDone = false;
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "insert into songs(song) values (?)";
+			String sql = "insert into songs(language_id,movie_id,song,song_link) values (?,?,?,?)";
+			pst = connection.prepareStatement(sql);
+			pst.setInt(1, songName.getLanguageid());
+			pst.setInt(2, songName.getMovieId());
+			pst.setString(3, songName.getSongName());
+			pst.setString(4, songName.getSongLink());
 
+			pst.executeUpdate();
+			isDone = true;
+		} catch (ClassNotFoundException | SQLException e) {
+			Logger.println(e);
+		} finally {
+			ConnectionUtil.close(pst, connection);
+		}
+		return isDone;
+	}
+	
+	public static boolean removeSongs(Song songName) {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		boolean isDone = false;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "delete from songs where song= ?";
 			pst = connection.prepareStatement(sql);
 			pst.setString(1, songName.getSongName());
 
 			pst.executeUpdate();
-
+			isDone = true;
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new DBException(e, "Unable to add song in db");
+			Logger.println(e);
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
+		return isDone;
 	}
 
 	public static List<Song> getAllSongs(Integer movieId) throws DBException {
@@ -61,20 +86,22 @@ public class SongDAO {
 		return songsList;
 	}
 
-	public static Song getSongLink(Integer songId) throws DBException {
+	public static Song getSongLinkAndSong(Integer songId) throws DBException {
 		Song link = null;
 		Connection connection = null;
 		PreparedStatement pst = null;
 
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "select song_link from songs  where song_id = ?";
+			String sql = "select song_link,song from songs  where song_id = ?";
 			pst = connection.prepareStatement(sql);
 			pst.setInt(1, songId);
 			ResultSet result = pst.executeQuery();
 			while (result.next()) {
 				String songLink = result.getString("song_link");
-				Song song = new Song(songLink);
+				String songName = result.getString("song");
+
+				Song song = new Song(songLink, songName);
 				link = song;
 			}
 		} catch (ClassNotFoundException | SQLException e) {

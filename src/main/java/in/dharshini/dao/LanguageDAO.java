@@ -11,29 +11,53 @@ import java.util.List;
 
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.ConnectionUtil;
+import in.dharshini.util.Logger;
 
 public class LanguageDAO {
 	private LanguageDAO() {
 		// Default constructor
 	}
 
-	public static void addLanguages(Language languageName) throws DBException {
+	public static boolean addLanguages(Language languageName) {
 		Connection connection = null;
 		PreparedStatement pst = null;
+		boolean isDone = false;
 		try {
 			connection = ConnectionUtil.getConnection();
 			String sql = "insert into languages(language) values (?)";
 
 			pst = connection.prepareStatement(sql);
 			pst.setString(1, languageName.getLanguageName());
-
 			pst.executeUpdate();
 
+			isDone = true;
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new DBException(e, "Unable to add language in db");
+		    Logger.println(e);
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
+		return isDone;
+	}
+	
+	public static boolean removeLanguages(Language languageName) {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		boolean isDone = false;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "delete from languages where language= ?";
+
+			pst = connection.prepareStatement(sql);
+			pst.setString(1, languageName.getLanguageName());
+			pst.executeUpdate();
+
+			isDone = true;
+		} catch (ClassNotFoundException | SQLException e) {
+		    Logger.println(e);
+		} finally {
+			ConnectionUtil.close(pst, connection);
+		}
+		return isDone;
 	}
 
 	public static List<Language> getAllLanguages() throws DBException {

@@ -15,8 +15,8 @@ public class LanguageService {
 	 * @param langName
 	 * @throws DBException
 	 */
-	public static void addLanguage(Language langName) throws DBException {
-		LanguageDAO.addLanguages(langName);
+	public static boolean addLanguage(Language langName) throws DBException {
+		return LanguageDAO.addLanguages(langName);
 	}
 
 	/**
@@ -27,5 +27,10 @@ public class LanguageService {
 	 */
 	public List<Language> getLanguages() throws DBException {
 		return LanguageDAO.getAllLanguages();
+	}
+	
+	
+	public static boolean removeLanguage(Language langName) throws DBException {
+		return LanguageDAO.removeLanguages(langName);
 	}
 }

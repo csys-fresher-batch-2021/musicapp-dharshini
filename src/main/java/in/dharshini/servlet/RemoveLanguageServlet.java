@@ -13,27 +13,21 @@ import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
 /**
- * Servlet implementation class AddLanguageServlet
+ * Servlet implementation class RemoveLanguageServlet
  */
-@WebServlet("/AddLanguageServlet")
-public class AddLanguageServlet extends HttpServlet {
+@WebServlet("/RemoveLanguageServlet")
+public class RemoveLanguageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * This doGet() is used to get language parameter from AddLanguage.jsp and adds
-	 * that language into database
-	 * 
-	 */
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String languageName = request.getParameter("language");
 		Language langName = new Language(languageName);
 		boolean isDone = false;
-		String errorMessage = "Cannot add language. Language already Exists";
-		String message = "Successfully added";
+		String errorMessage = "Cannot remove language. Language Does Not Exist";
+		String message = "Successfully Removed";
 		try {
-			isDone = LanguageService.addLanguage(langName);
+			isDone = LanguageService.removeLanguage(langName);
 			if (isDone) {
 				response.sendRedirect("AddOrDeleteLanguage.jsp?message=" + message);
 			} else {
@@ -42,5 +36,6 @@ public class AddLanguageServlet extends HttpServlet {
 		} catch (DBException | IOException e) {
 			Logger.println(e);
 		}
+
 	}
 }

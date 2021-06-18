@@ -5,7 +5,6 @@
 <%@page import="in.dharshini.service.SongService"%>
 <%@page import="in.dharshini.dao.SearchSongDAO"%>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +25,6 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
-
 		<form action=SearchSongServlet>
 			<div class="center">
 				<h3>Search Your Favourite Song</h3>
@@ -35,29 +33,30 @@
 				<button class="btn btn-secondary" type="submit">Search</button>
 				<br /> <br /> <br /> <br />
 
+
 				<%
 				String errorMessage = request.getParameter("errorMessage");
 				if (errorMessage != null) {
 					String encodedErrorMessage = Encode.forHtml(errorMessage);
 					out.println(encodedErrorMessage);
 				} else {
-					String searchedSong = (String) request.getAttribute("searchedSong");
-					String encodedString = Encode.forHtml(searchedSong);
+					//String searchedSong = (String) request.getAttribute("searchedSong");
+					//String encodedString = Encode.forHtml(searchedSong);
 					Song songLink = (Song) request.getAttribute("songLink");
-					session.setAttribute("song",searchedSong);
-					session.setAttribute("songLink",songLink);
 
-					if (searchedSong != null) {
+					if (songLink != null) {
 				%>
 				<h3>Result For The Search</h3>
 
 				<div class="c">
 					Song :
-					<%=encodedString%>
+					<%=songLink.getSongName()%>
 				</div>
 				<br /> <a class="btn btn-primary"
-					href=" <%=songLink.getSongLink()%>" role="button">Play</a> <br />
-				<br />
+					href=" <%=songLink.getSongLink()%>" role="submit">Play</a> <br />
+				<br /> <a class="btn btn-primary"
+					href='/app/AddToPlaylist?song=+<%=songLink.getSongName()%>+&songLink=+<%=songLink.getSongLink()%>+'>Add
+					To Playlist</a>
 
 				<%
 				}
