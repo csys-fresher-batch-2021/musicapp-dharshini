@@ -29,7 +29,7 @@ public class SongImageUtilitiesServlet extends HttpServlet {
 			byte[] indexImageSrc = service.getSongImageSrc(imageName);
 			OutputStream obj = response.getOutputStream();
 			obj.write(indexImageSrc);
-		} catch (DBException e) {
+		} catch (DBException | IOException e) {
 			Logger.println(e);
 		}
 	}

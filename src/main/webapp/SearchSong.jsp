@@ -42,21 +42,21 @@ body {
 				<%
 				String errorMessage = request.getParameter("errorMessage");
 				String songName = request.getParameter("songName");
-
+				String encodedSongName = Encode.forHtml(songName);
 				if (errorMessage != null) {
 					String encodedErrorMessage = Encode.forHtml(errorMessage);
-					out.println("<font color='red' size='5px'>"+encodedErrorMessage+"</font");
+					out.println("<font color='red' size='5px'>" + encodedErrorMessage + "</font");
 				} else if (songName != null) {
 				%>
 				<h3 style="color: darkturquoise">Result For The Search</h3>
 
 				<div class="c">
-					<label style="color: gold">Song : <%=songName%></label>
+					<label style="color: gold">Song : <%=encodedSongName%></label>
 				</div>
 				<br /> <a class="btn btn-primary"
-					href="Download.jsp?songName=<%=songName%>" role="submit">Play</a> <br />
-				<br /> <a class="btn btn-primary"
-					href="AddToPlaylist?song=<%=songName%>">Add To Playlist</a>
+					href="Download.jsp?songName=<%=encodedSongName%>" role="submit">Play</a>
+				<br /> <br /> <a class="btn btn-primary"
+					href="AddToPlaylist?song=<%=encodedSongName%>">Add To Playlist</a>
 				<%
 				}
 				%>

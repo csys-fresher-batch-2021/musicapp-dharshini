@@ -30,7 +30,7 @@ public class SongUtilitiesServlet extends HttpServlet {
 			byte[] songSrc = songService.getSongFile(songName);
 			OutputStream obj = response.getOutputStream();
 			obj.write(songSrc);
-		} catch (DBException e) {
+		} catch (IOException | DBException e) {
 			Logger.println(e);
 		}
 	}

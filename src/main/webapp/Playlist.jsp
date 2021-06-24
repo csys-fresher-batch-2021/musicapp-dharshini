@@ -55,6 +55,7 @@ body {
 				String infoMessage2 = request.getParameter("infoMessage2");
 
 				String songName = (String) session.getAttribute("songName");
+				String encodedSongName = Encode.forHtml(songName);
 				if (errorMessage != null) {
 					String encodedErrorMessage = Encode.forHtml(errorMessage);
 					out.println("<f>" + encodedErrorMessage + "</f>");
@@ -66,11 +67,11 @@ body {
 				<h3 style="color: purple">Your Playlist</h3>
 				<audio controls autoplay>
 					<%
-					if (songName != null) {
+					if (encodedSongName != null) {
 					%>
-					<source src="SongUtilitiesServlet?songName=<%=songName%>"
+					<source src="SongUtilitiesServlet?songName=<%=encodedSongName%>"
 						type="audio/ogg">
-					<source src="SongUtilitiesServlet?songName=<%=songName%>"
+					<source src="SongUtilitiesServlet?songName=<%=encodedSongName%>"
 						type="audio/mpeg">
 					<%
 					}

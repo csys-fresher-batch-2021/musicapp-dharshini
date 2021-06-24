@@ -11,6 +11,10 @@
 	text-align: center;
 	padding: 70px 0;
 }
+
+f {
+	color: red;
+}
 </style>
 </head>
 <body>
@@ -28,15 +32,15 @@
 
 				<button class="btn btn-primary" type="submit">Submit</button>
 				<button class="btn btn-danger" type="reset">Reset</button>
-				<br />
-				<br />
+				<br /> <br />
 
-	String errorMessage = request.getParameter("errorMessage");
-if (errorMessage != null) {
-	String encodedString = Encode.forHtml(errorMessage);
+				<%
+				String errorMessage = request.getParameter("errorMessage");
+				if (errorMessage != null) {
+					String encodedString = Encode.forHtml(errorMessage);
 
-	out.println("<font color='red'>" + encodedString + "</font>");
-}
+					out.println("<f>" + encodedString + "</f>");
+				}
 				%>
 			</form>
 		</div>

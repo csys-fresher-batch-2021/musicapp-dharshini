@@ -31,7 +31,7 @@ public class ImageUtilitiesServlet extends HttpServlet {
 			OutputStream obj = response.getOutputStream();
 			obj.write(indexImageSrc);
 
-		} catch (DBException e) {
+		} catch (IOException | DBException e) {
 			Logger.println(e);
 		}
 	}
