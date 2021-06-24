@@ -52,12 +52,11 @@ p1 {
 						id="languageId" required autofocus /> <br /> <br /> <label>Movie
 						Id</label> <input type="text" name="movieId" id="movieId" required /> <br />
 					<br /> <label>Song Name</label> <input type="text" name="songName"
-						id="songName" required /><br /> <br /> <label>Song
-							File</label> <input type="file" name="songFile" id="songFile"
-						accept="mp3/*" required /> <br /> <br />
-					<label>Song Image</label> <input type="file"
-						name="songImage" id="songImage" accept="image/*" required /> <br />
-					<br />
+						id="songName" required /><br /> <br /> <label>Song File</label>
+					<input type="file" name="songFile" id="songFile" accept="mp3/*"
+						required /> <br /> <br /> <label>Song Image</label> <input
+						type="file" name="songImage" id="songImage" accept="image/*"
+						required /> <br /> <br />
 					<button class="btn btn-secondary">Add</button>
 					<button class="btn btn-danger">Reset</button>
 					<br />

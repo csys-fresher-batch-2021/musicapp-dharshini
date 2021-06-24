@@ -16,27 +16,27 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 
-<main>
+	<main>
 		<div class="center">
 			<form method="POST" action="AdminServlet">
-				<h3> Admin Login</h3><br/>
-				<label>Email Id</label> <input type="email"
+				<h3>Admin Login</h3>
+				<br /> <label>Email Id</label> <input type="email"
 					placeholder="Enter Valid Emailid" name="adminEmail" id="adminEmail"
 					required autofocus /><br> <br> <label>Password</label> <input
 					type="password" placeholder="Enter your Password" name="adminPass"
 					id="adminPass" required /> <br /> <br />
-			
+
 				<button class="btn btn-primary" type="submit">Submit</button>
 				<button class="btn btn-danger" type="reset">Reset</button>
-				<br /><br/>
+				<br />
+				<br />
 
-				 <%
-				String errorMessage = request.getParameter("errorMessage");
-				if (errorMessage != null) {
-					String encodedString = Encode.forHtml(errorMessage);
+	String errorMessage = request.getParameter("errorMessage");
+if (errorMessage != null) {
+	String encodedString = Encode.forHtml(errorMessage);
 
-					out.println("<font color='red'>" + encodedString + "</font>");
-				}
+	out.println("<font color='red'>" + encodedString + "</font>");
+}
 				%>
 			</form>
 		</div>

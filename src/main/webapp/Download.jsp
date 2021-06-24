@@ -45,8 +45,7 @@ body {
 						src="SongUtilitiesServlet?songName=<%=songName.toLowerCase()%>"
 						type="audio/mpeg">
 				</audio>
-				<br />
-				<br />
+				<br /> <br />
 				<div class="c">
 					<img
 						src="SongImageUtilitiesServlet?imageName=<%=songName.toLowerCase()%>"

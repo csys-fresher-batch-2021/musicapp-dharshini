@@ -34,7 +34,6 @@ public class SearchSongServlet extends HttpServlet {
 				response.sendRedirect("SearchSong.jsp?songName=" + hasSongAndName.getSongName());
 			} else {
 				response.sendRedirect("SearchSong.jsp?errorMessage=" + errorMessage);
-
 			}
 		} catch (IOException e) {
 			Logger.println(e);

@@ -36,8 +36,8 @@ body {
 				MovieService movieService = new MovieService();
 				List<Movie> movieList = movieService.getMovies(languageId);
 				%>
-				
-				<select required name="movies" id="movies" >
+
+				<select required name="movies" id="movies">
 					<option disabled selected>--Select movie--</option>
 					<%
 					for (Movie movie : movieList) {

@@ -34,10 +34,9 @@ f {
 	width: 200px;
 }
 
-
 body {
 	background-image: url("ImageUtilitiesServlet?imageName=PlayList-Image");
-	 background-repeat: no-repeat;
+	background-repeat: no-repeat;
 	background-size: 103% 100%;
 }
 </style>
@@ -82,7 +81,7 @@ body {
 					<a class="btn btn-danger" href="ClearPlaylistServlet">Clear
 						Playlist</a>
 				</div>
-				<br /> <br /><br/>
+				<br /> <br /> <br />
 				<table class="table table_bordered">
 					<caption>List Of songs in Playlist</caption>
 					<thead>
@@ -117,12 +116,6 @@ body {
 				<a href="SearchSong.jsp">Add More Songs To Your Playlist</a>
 			</div>
 		</form>
-		<script>
-			function play() {
-				let play = "Yenga Annan";
-			}
-		</script>
-
 	</main>
 </body>
 </html>

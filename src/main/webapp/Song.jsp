@@ -16,7 +16,7 @@
 
 body {
 	background-image: url("ImageUtilitiesServlet?imageName=Login-Image");
-	 background-repeat: no-repeat;
+	background-repeat: no-repeat;
 	background-size: 103% 200%;
 }
 </style>
@@ -27,12 +27,12 @@ body {
 
 		<form action="SongServlet">
 			<div class="center">
-				<h2 style="color:purple">List Of Available Songs</h2>
+				<h2 style="color: purple">List Of Available Songs</h2>
 				<br />
 				<%
 				Integer movieId = Integer.parseInt(request.getParameter("movieId"));
-						SongService songService = new SongService();
-						List<Song> songList = songService.getSongsNames(movieId);
+				SongService songService = new SongService();
+				List<Song> songList = songService.getSongsNames(movieId);
 				%>
 				<select name="song" required>
 

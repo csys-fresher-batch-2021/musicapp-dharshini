@@ -27,10 +27,8 @@ public class SongImageUtilitiesServlet extends HttpServlet {
 		try {
 			ImageUtilityService service = new ImageUtilityService();
 			byte[] indexImageSrc = service.getSongImageSrc(imageName);
-
 			OutputStream obj = response.getOutputStream();
 			obj.write(indexImageSrc);
-
 		} catch (DBException e) {
 			Logger.println(e);
 		}

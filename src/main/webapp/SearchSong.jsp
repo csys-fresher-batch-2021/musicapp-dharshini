@@ -21,7 +21,7 @@
 
 body {
 	background-image: url("ImageUtilitiesServlet?imageName=Login-Image");
-	 background-repeat: no-repeat;
+	background-repeat: no-repeat;
 	background-size: 103% 300%;
 }
 </style>
@@ -51,16 +51,12 @@ body {
 				<h3 style="color: darkturquoise">Result For The Search</h3>
 
 				<div class="c">
-					<label style="color: gold">Song :
-					<%=songName%></label>
+					<label style="color: gold">Song : <%=songName%></label>
 				</div>
 				<br /> <a class="btn btn-primary"
 					href="Download.jsp?songName=<%=songName%>" role="submit">Play</a> <br />
-				<br />
-				
-				 <a class="btn btn-primary"
-					href="AddToPlaylist?song=<%=songName%>">Add
-					To Playlist</a>
+				<br /> <a class="btn btn-primary"
+					href="AddToPlaylist?song=<%=songName%>">Add To Playlist</a>
 				<%
 				}
 				%>

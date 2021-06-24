@@ -10,7 +10,7 @@
 
 body {
 	background-image: url("ImageUtilitiesServlet?imageName=Index-Image");
-	 background-repeat: no-repeat;
+	background-repeat: no-repeat;
 	background-size: 100% 135%;
 }
 </style>
