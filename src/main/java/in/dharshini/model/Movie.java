@@ -4,8 +4,13 @@ public class Movie {
 
 	private String movieName;
 	private Integer movieId;
-
 	private Integer languageId;
+
+	public Movie(Integer languageId, String movieName) {
+		super();
+		this.languageId = languageId;
+		this.movieName = movieName;
+	}
 
 	public Movie(String movieName) {
 		this.movieName = movieName;

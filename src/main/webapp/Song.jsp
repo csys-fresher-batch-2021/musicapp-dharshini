@@ -13,6 +13,12 @@
 	text-align: center;
 	padding: 70px 0;
 }
+
+body {
+	background-image: url("ImageUtilitiesServlet?imageName=Login-Image");
+	background-repeat: no-repeat;
+	background-size: 103% 200%;
+}
 </style>
 </head>
 <body>
@@ -21,20 +27,20 @@
 
 		<form action="SongServlet">
 			<div class="center">
-				<h3>List Of Available Songs</h3>
+				<h2 style="color: purple">List Of Available Songs</h2>
 				<br />
 				<%
 				Integer movieId = Integer.parseInt(request.getParameter("movieId"));
 				SongService songService = new SongService();
-				List<Song> songList = songService.getSongs(movieId);
+				List<Song> songList = songService.getSongsNames(movieId);
 				%>
-				<select name="songs" required>
+				<select name="song" required>
 
-					<option disabled selected>--Select language--</option>
+					<option disabled selected>--Select song--</option>
 					<%
 					for (Song song : songList) {
 					%>
-					<option value="<%=song.getSongId()%>"><%=song.getSongName()%></option>
+					<option value="<%=song.getSongName()%>"><%=song.getSongName()%></option>
 					<%
 					}
 					%>

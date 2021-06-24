@@ -1,11 +1,30 @@
 package in.dharshini.model;
 
 public class Song {
+	private Integer songId;
+	private String songLink;
 	private String songName;
 	private Integer languageid;
 	private Integer movieId;
-	private Integer songId;
-	private String songLink;
+	private String songFile;
+	private String songImage;
+
+	public Song(Integer languageid, Integer movieId, String songName, String songFile, String songImage) {
+		super();
+		this.languageid = languageid;
+		this.movieId = movieId;
+		this.songName = songName;
+		this.songFile = songFile;
+		this.songImage = songImage;
+	}
+
+	public Song(Integer languageid, Integer movieId, String songName, String songLink) {
+		super();
+		this.songName = songName;
+		this.languageid = languageid;
+		this.movieId = movieId;
+		this.songLink = songLink;
+	}
 
 	public Song(String songLink, String songName) {
 		super();
@@ -14,10 +33,26 @@ public class Song {
 
 	}
 
-	public Song(String songLink) {
+	public Song(String songName) {
 		super();
-		this.songLink = songLink;
+		this.songName = songName;
 
+	}
+
+	public String getSongFile() {
+		return songFile;
+	}
+
+	public void setSongFile(String songFile) {
+		this.songFile = songFile;
+	}
+
+	public String getSongImage() {
+		return songImage;
+	}
+
+	public void setSongImage(String songImage) {
+		this.songImage = songImage;
 	}
 
 	public String getSongLink() {
