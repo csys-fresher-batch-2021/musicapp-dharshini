@@ -1,7 +1,5 @@
 package in.dharshini.dao;
 
-import in.dharshini.model.Language;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.dharshini.model.Language;
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.ConnectionUtil;
 import in.dharshini.util.Logger;
@@ -18,6 +17,12 @@ public class LanguageDAO {
 		// Default constructor
 	}
 
+	/**
+	 * This method is used to add languages to the db
+	 *
+	 * @param languageName
+	 * @return
+	 */
 	public static boolean addLanguages(Language languageName) {
 		Connection connection = null;
 		PreparedStatement pst = null;
@@ -32,34 +37,19 @@ public class LanguageDAO {
 
 			isDone = true;
 		} catch (ClassNotFoundException | SQLException e) {
-		    Logger.println(e);
-		} finally {
-			ConnectionUtil.close(pst, connection);
-		}
-		return isDone;
-	}
-	
-	public static boolean removeLanguages(Language languageName) {
-		Connection connection = null;
-		PreparedStatement pst = null;
-		boolean isDone = false;
-		try {
-			connection = ConnectionUtil.getConnection();
-			String sql = "delete from languages where language= ?";
-
-			pst = connection.prepareStatement(sql);
-			pst.setString(1, languageName.getLanguageName());
-			pst.executeUpdate();
-
-			isDone = true;
-		} catch (ClassNotFoundException | SQLException e) {
-		    Logger.println(e);
+			Logger.println(e);
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
 		return isDone;
 	}
 
+	/**
+	 * This method is used to get the list of all available languages from database
+	 *
+	 * @return
+	 * @throws DBException
+	 */
 	public static List<Language> getAllLanguages() throws DBException {
 		List<Language> languageList = new ArrayList<>();
 		Connection connection = null;
@@ -82,6 +72,33 @@ public class LanguageDAO {
 			ConnectionUtil.close(pst, connection);
 		}
 		return languageList;
+	}
+
+	/**
+	 * This method is used to remove available languages from the db
+	 *
+	 * @param languageName
+	 * @return
+	 */
+	public static boolean removeLanguages(Language languageName) {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		boolean isDone = false;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "delete from languages where language= ?";
+
+			pst = connection.prepareStatement(sql);
+			pst.setString(1, languageName.getLanguageName());
+			pst.executeUpdate();
+
+			isDone = true;
+		} catch (ClassNotFoundException | SQLException e) {
+			Logger.println(e);
+		} finally {
+			ConnectionUtil.close(pst, connection);
+		}
+		return isDone;
 	}
 
 }

@@ -24,21 +24,31 @@ import in.dharshini.util.Logger;
 public class PlaylistServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		List<Playlist> playlistList = new ArrayList<>();
 		HttpSession session = request.getSession(false);
 
+		String songName = request.getParameter("songName");
+		session.setAttribute("songName", songName);
 		Integer userId = (Integer) session.getAttribute("userId");
 		Playlist playlist = new Playlist(userId);
 		PlaylistDAO playlistDao = new PlaylistDAO();
 		try {
 			playlistList = playlistDao.getAllPlaylistSongs(playlist);
-		} catch (DBException e) {
+			String errorMessage = request.getParameter("errorMessage");
+			String infoMessage = request.getParameter("infoMessage");
+
+			request.setAttribute("list", playlistList);
+			request.setAttribute("errorMessage", errorMessage);
+			request.setAttribute("infoMessage", infoMessage);
+
+			RequestDispatcher rd = request.getRequestDispatcher("Playlist.jsp");
+			rd.forward(request, response);
+		} catch (DBException | NullPointerException | ServletException | IOException e) {
 			Logger.println(e);
 		}
-		request.setAttribute("list", playlistList);
-		RequestDispatcher rd = request.getRequestDispatcher("Playlist.jsp");
-		rd.forward(request, response);
 	}
 }

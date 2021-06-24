@@ -1,6 +1,7 @@
 package in.dharshini.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,29 +21,28 @@ import in.dharshini.util.Logger;
 public class AddToPlaylist extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String errorMessage="Song Already Added to playlist";
 		HttpSession session = request.getSession(false);
+
+		String infoMessage = "Song Successfully added";
+		String errorMessage = "Song Already Added to playlist";
+
 		String songName = request.getParameter("song");
-		String songLink = request.getParameter("songLink");
 		PlaylistService pService = new PlaylistService();
 		boolean isValid = false;
 		Integer userId = (Integer) session.getAttribute("userId");
-		System.out.println(userId);
 		try {
-			session.setAttribute("userId", userId);
-			Playlist playlist = new Playlist(userId, songName, songLink);
+			Playlist playlist = new Playlist(userId, songName);
 			isValid = pService.addPlaylist(playlist);
-			if(isValid) {
-			response.sendRedirect("PlaylistServlet");
+			if (isValid) {
+				response.sendRedirect("PlaylistServlet?infoMessage=" + infoMessage);
+			} else {
+				response.sendRedirect("PlaylistServlet?errorMessage=" + errorMessage);
 			}
-			else {
-				response.sendRedirect("Playlist.jsp?errorMessage="+errorMessage);
-			}
-		} catch (DBException e) {
+		} catch (IOException | DBException e) {
 			Logger.println(e);
 		}
-
 	}
 }

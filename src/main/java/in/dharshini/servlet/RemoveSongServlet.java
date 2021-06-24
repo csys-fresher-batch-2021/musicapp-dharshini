@@ -1,6 +1,7 @@
 package in.dharshini.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.dharshini.model.Song;
 import in.dharshini.service.SongService;
+import in.dharshini.util.Logger;
 
 /**
  * Servlet implementation class RemoveSongServlet
@@ -17,6 +19,7 @@ import in.dharshini.service.SongService;
 public class RemoveSongServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String songName = request.getParameter("song");
@@ -24,7 +27,8 @@ public class RemoveSongServlet extends HttpServlet {
 		boolean isDone = false;
 		String errorMessage1 = "Cannot remove song. Song Does Not Exist";
 		String message1 = "Successfully Removed";
-		{
+
+		try {
 			SongService songService = new SongService();
 			isDone = songService.removeSongs(song);
 			if (isDone) {
@@ -32,7 +36,8 @@ public class RemoveSongServlet extends HttpServlet {
 			} else {
 				response.sendRedirect("AddOrDeleteSong.jsp?errorMessage=" + errorMessage1);
 			}
+		} catch (IOException e) {
+			Logger.println(e);
 		}
-
 	}
 }

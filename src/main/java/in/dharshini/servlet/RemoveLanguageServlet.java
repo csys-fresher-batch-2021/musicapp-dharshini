@@ -1,6 +1,7 @@
 package in.dharshini.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.dharshini.model.Language;
 import in.dharshini.service.LanguageService;
-import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
 /**
@@ -19,6 +19,7 @@ import in.dharshini.util.Logger;
 public class RemoveLanguageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String languageName = request.getParameter("language");
@@ -33,7 +34,7 @@ public class RemoveLanguageServlet extends HttpServlet {
 			} else {
 				response.sendRedirect("AddOrDeleteLanguage.jsp?errorMessage=" + errorMessage);
 			}
-		} catch (DBException | IOException e) {
+		} catch (IOException e) {
 			Logger.println(e);
 		}
 

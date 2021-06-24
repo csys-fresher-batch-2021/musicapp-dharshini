@@ -1,17 +1,15 @@
 package in.dharshini.servlet;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import in.dharshini.dto.SongDTO;
 import in.dharshini.model.Song;
 import in.dharshini.service.SongService;
-import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
 @WebServlet("/SearchSongServlet")
@@ -24,24 +22,21 @@ public class SearchSongServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+		String searchedSong = request.getParameter("song");
 		String errorMessage = "Sorry. No Results Found. Please make sure your words are spelled correctly or use less or different keywords";
 
-		try {
-			String searchedSong = request.getParameter("song");
-			SongService songService = new SongService();
-			Song songLink = songService.getSearchedSongLink(searchedSong);
+		SongService songService = new SongService();
+		Song songName = new Song(searchedSong.toLowerCase());
 
-			if (songLink != null) {
-				request.setAttribute("songLink", songLink);
-				//request.setAttribute("searchedSong", searchedSong);
-				RequestDispatcher rd = request.getRequestDispatcher("SearchSong.jsp");
-				rd.forward(request, response);
+		SongDTO hasSongAndName = songService.isSongPresent(songName);
+		try {
+			if (hasSongAndName.getHasSong() == 1) {
+				response.sendRedirect("SearchSong.jsp?songName=" + hasSongAndName.getSongName());
 			} else {
 				response.sendRedirect("SearchSong.jsp?errorMessage=" + errorMessage);
-			}
-		} catch (IOException | ServletException |
 
-				DBException e) {
+			}
+		} catch (IOException e) {
 			Logger.println(e);
 		}
 	}
