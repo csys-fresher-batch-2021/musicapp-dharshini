@@ -13,9 +13,20 @@ public class Playlist {
 		this.playlistSongLink = playlistSongLink;
 	}
 
+	public Playlist(String playlistSongName) {
+		super();
+		this.playlistSongName = playlistSongName;
+	}
+
 	public Playlist(Integer userId) {
 		super();
 		this.userId = userId;
+	}
+
+	public Playlist(Integer userId, String playlistSongName) {
+		super();
+		this.userId = userId;
+		this.playlistSongName = playlistSongName;
 	}
 
 	public Playlist(String playlistSongName, String playlistSongLink) {

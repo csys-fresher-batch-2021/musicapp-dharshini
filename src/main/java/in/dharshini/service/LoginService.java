@@ -1,6 +1,7 @@
 package in.dharshini.service;
 
 import java.util.Set;
+
 import in.dharshini.dao.UserDAO;
 import in.dharshini.model.User;
 import in.dharshini.userexception.DBException;
@@ -10,9 +11,10 @@ import in.dharshini.util.Logger;
 public class LoginService {
 
 	/**
-	 * This method validates whether the user is registered user or not with the
-	 * help of login details
-	 * 
+	 * This method validates the user input details for correct format and call
+	 * checkUser() method to check the user is registered user or not with the help
+	 * of login details
+	 *
 	 * @param inputMailId
 	 * @param inputPassword
 	 * @return
@@ -34,7 +36,7 @@ public class LoginService {
 	/**
 	 * This method checks whether the user input login credentials is in registered
 	 * database or not
-	 * 
+	 *
 	 * @param inputMailId
 	 * @param inputPassword
 	 * @return
@@ -57,6 +59,12 @@ public class LoginService {
 		return isValid;
 	}
 
+	/**
+	 * This method is used to check whether the admin login detail is correct or not
+	 *
+	 * @param user
+	 * @return
+	 */
 	public static boolean adminLoginCheck(User user) {
 		boolean isValid = false;
 		try {
@@ -69,6 +77,14 @@ public class LoginService {
 		return isValid;
 	}
 
+	/**
+	 * This method is used to update password of existing user
+	 *
+	 * @param user
+	 * @return
+	 * @throws ServiceException
+	 * @throws DBException
+	 */
 	public boolean updatePassword(User user) throws ServiceException, DBException {
 		boolean isUpdated = false;
 
@@ -85,6 +101,13 @@ public class LoginService {
 		return isUpdated;
 	}
 
+	/**
+	 * This method is used to check whether the input mailId in uodate password
+	 * feature is registered mailId or not
+	 *
+	 * @param inputMailId
+	 * @return
+	 */
 	public static boolean checkUserForPasswordUpdate(String inputMailId) {
 		boolean isValid = false;
 		try {

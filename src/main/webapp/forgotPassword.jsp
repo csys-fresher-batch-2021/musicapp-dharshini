@@ -1,4 +1,4 @@
-
+<%@ page import="org.owasp.encoder.Encode"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +32,6 @@ f {
 					New Password</label> <input type="password"
 					placeholder="Enter New Password" name="password" id="password"
 					required /> <br /> <br />
-
 				<button class="btn btn-primary" type="submit">Update</button>
 				<button class="btn btn-danger" type="reset">Reset</button>
 				<br /> <br />
@@ -41,15 +40,18 @@ f {
 				String errorMessage = (String) request.getParameter("errorMessage");
 				String errorMessage1 = (String) request.getParameter("errorMessage1");
 				if (infoMessage != null) {
-					out.println("<p>" + infoMessage + "</p>");
+					String encodedInfoMessage = Encode.forHtml(infoMessage);
+					out.println("<p>" + encodedInfoMessage + "</p>");
 				%>
-				Click Below To Login
-				<br /> <a class="btn btn-secondary" href="Login.jsp">Login</a>
+				Click Below To Login <br /> <a class="btn btn-secondary"
+					href="Login.jsp">Login</a>
 				<%
 				} else if (errorMessage != null) {
-				out.println("<f>" + errorMessage + "</f>");
+				String encodedErrorMessage = Encode.forHtml(errorMessage);
+				out.println("<f>" + encodedErrorMessage + "</f>");
 				} else if (errorMessage1 != null) {
-				out.println("<f>" + errorMessage1 + "</f>");
+				String encodedErrorMessage1 = Encode.forHtml(errorMessage1);
+				out.println("<f>" + encodedErrorMessage1 + "</f>");
 				}
 				%>
 			</form>

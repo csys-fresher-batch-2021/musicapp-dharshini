@@ -22,7 +22,7 @@ p1 {
 </head>
 <body>
 
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="AdminHeader.jsp"></jsp:include>
 	<main class="container-fluid">
 
 		<form>

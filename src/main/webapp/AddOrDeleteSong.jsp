@@ -15,7 +15,7 @@
 .border1 {
 	border: 10px solid gray;
 	display: inline-block;
-	height: 330px;
+	height: 380px;
 	border-width: 2px;
 	padding: 20px;
 	border-radius: 8px;
@@ -41,23 +41,28 @@ p1 {
 </head>
 <body>
 
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="AdminHeader.jsp"></jsp:include>
 	<main class="container-fluid">
 
 		<form action="AddSongServlet">
 			<div class="center">
-
 				<h1>Add Song</h1>
 				<div class="border1">
 					<label>Language Id</label> <input type="text" name="languageId"
 						id="languageId" required autofocus /> <br /> <br /> <label>Movie
 						Id</label> <input type="text" name="movieId" id="movieId" required /> <br />
-					<br /> <label>Song To Be Updated</label> <input type="text"
-						name="song" id="song" required /><br /> <br /> <label>Song
-						Link</label> <input type="text" name="songLink" id="songLink" required />
-					<br /> <br />
-					<button class="btn btn-secondary">Add</button>
+					<br /> <label>Song Name</label> <input type="text" name="songName"
+						id="songName" required /><br /> <br /> <label>Song
+							File</label> <input type="file" name="songFile" id="songFile"
+						accept="mp3/*" required /> <br /> <br />
+					<label>Song Image</label> <input type="file"
+						name="songImage" id="songImage" accept="image/*" required /> <br />
 					<br />
+					<button class="btn btn-secondary">Add</button>
+					<button class="btn btn-danger">Reset</button>
+					<br />
+
+
 					<%
 					String errorMessage = (String) request.getParameter("errorMessage");
 					if (errorMessage != null) {

@@ -1,7 +1,5 @@
 package in.dharshini.dao;
 
-import in.dharshini.model.Movie;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.dharshini.model.Movie;
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.ConnectionUtil;
 import in.dharshini.util.Logger;
@@ -18,6 +17,12 @@ public class MovieDAO {
 		// Default constructor
 	}
 
+	/**
+	 * This Method is used to add movies to db
+	 *
+	 * @param movieName
+	 * @return
+	 */
 	public static boolean addMovies(Movie movieName) {
 		Connection connection = null;
 		PreparedStatement pst = null;
@@ -40,6 +45,12 @@ public class MovieDAO {
 		return isDone;
 	}
 
+	/**
+	 * This method is used to remove movies from db
+	 *
+	 * @param movieName
+	 * @return
+	 */
 	public static boolean removeMovies(Movie movieName) {
 		Connection connection = null;
 		PreparedStatement pst = null;
@@ -60,6 +71,13 @@ public class MovieDAO {
 		return isDone;
 	}
 
+	/**
+	 * This Method is used to get all available movies from db
+	 *
+	 * @param languageId
+	 * @return
+	 * @throws DBException
+	 */
 	public static List<Movie> getAllMovies(Integer languageId) throws DBException {
 		final List<Movie> moviesList = new ArrayList<>();
 		Connection connection = null;

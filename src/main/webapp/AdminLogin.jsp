@@ -14,10 +14,12 @@
 </style>
 </head>
 <body>
+	<jsp:include page="header.jsp"></jsp:include>
 
+<main>
 		<div class="center">
 			<form method="POST" action="AdminServlet">
-				<h1>Login</h1>
+				<h3> Admin Login</h3><br/>
 				<label>Email Id</label> <input type="email"
 					placeholder="Enter Valid Emailid" name="adminEmail" id="adminEmail"
 					required autofocus /><br> <br> <label>Password</label> <input

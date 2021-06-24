@@ -2,11 +2,9 @@
 <link rel="stylesheet" href="assets/css/fontawesome.min.css">
 <link rel="stylesheet" href="assets/css/style.css">
 
-
 <%
 String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 %>
-
 
 <header>
 	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -21,7 +19,6 @@ String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 				<li class="nav-item active"><a class="nav-link"
 					href="index.jsp">Home <span class="sr-only">(current)</span></a></li>
-
 			</ul>
 			<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 				<%
@@ -30,18 +27,17 @@ String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 				<li class="nav-item active"><a class="nav-link"
 					href="Login.jsp">Login</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="Registration.jsp">Register</a> 
-					<li class="nav-item"><a class="nav-link"
-					href="AdminLogin.jsp">Admin</a><%
-					
- } else {
- %>
+					href="Registration.jsp">Register</a>
+				<li class="nav-item"><a class="nav-link" href="AdminLogin.jsp">Admin</a>
+					<%
+					} else {
+					%>
+				<li class="nav-item"><a class="nav-link" href="Language.jsp">Search
+						Song By Language</a></li>
 				<li class="nav-item"><a class="nav-link" href="SearchSong.jsp">Search
-						Song</a></li>
-				<li class="nav-item"><a class="nav-link" href="SearchSong.jsp">Create
-						Playlist</a>
-				<li class="nav-item"><a class="nav-link" href="/app/PlaylistServlet">My
-						Playlist</a> <%
+						Song/Create Playlist</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/app/PlaylistServlet">My Playlist</a> <%
  }
  %> <%
  if (loggedInUsername != null) {

@@ -1,7 +1,7 @@
 <%@page import="in.dharshini.dao.SongDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="in.dharshini.service.SongService"%>
-<%@page import="in.dharshini.model.Song"%>
+<%@page import="in.dharshini.dto.SongDTO"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,8 +13,15 @@
 	text-align: center;
 	padding: 70px 0;
 }
+
 .c {
 	font-size: 150%;
+}
+
+body {
+	background-image: url("ImageUtilitiesServlet?imageName=Play-Image");
+	background-repeat: no-repeat;
+	background-size: 103% 200%;
 }
 </style>
 </head>
@@ -24,18 +31,30 @@
 
 		<form>
 			<div class="center">
-				<h3>Download Your Favourite Song</h3>
+				<h3 style="color: darkslateblue">Enjoy Your Favourite Song
+					Online</h3>
 				<br />
 				<%
-				Integer songId = Integer.parseInt(request.getParameter("songId"));
-				SongService songService = new SongService();
-				Song song = songService.getSongLink(songId);
+				String songName = request.getParameter("songName");
 				%>
-				<div class ="c">
-					Song Name:
-					<%=song.getSongName()%>
+				<audio controls autoplay>
+					<source
+						src="SongUtilitiesServlet?songName=<%=songName.toLowerCase()%>"
+						type="audio/ogg">
+					<source
+						src="SongUtilitiesServlet?songName=<%=songName.toLowerCase()%>"
+						type="audio/mpeg">
+				</audio>
+				<br />
+				<br />
+				<div class="c">
+					<img
+						src="SongImageUtilitiesServlet?imageName=<%=songName.toLowerCase()%>"
+						alt="<%=songName%>" width="400" height="333"><br /> Song
+					Name:
+					<%=songName%>
 				</div>
-				<br /> <a href="<%=song.getSongLink()%>">Click here to download</a>
+				<br />
 			</div>
 		</form>
 	</main>

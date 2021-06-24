@@ -33,23 +33,23 @@ public class LoginServlet extends HttpServlet {
 		String emailId = request.getParameter("emailid");
 		String password = request.getParameter("password");
 
-		Integer userId=null;
+		Integer userId = null;
 		User mail = new User(emailId);
 		PlaylistService pService = new PlaylistService();
 		try {
 			User userIdObj = pService.getUserId(mail);
-			userId=userIdObj.getUserId();
+			userId = userIdObj.getUserId();
 		} catch (DBException e1) {
 			Logger.println(e1);
 		}
 
 		HttpSession session = request.getSession();
-		session.setAttribute("LOGGED_IN_USER", emailId);
-		session.setAttribute("userId", userId);
 		User user = new User(emailId, password);
 		boolean isValid = LoginService.loginDetailCheck(user);
 		if (isValid) {
 			try {
+				session.setAttribute("LOGGED_IN_USER", emailId);
+				session.setAttribute("userId", userId);
 				response.sendRedirect("Language.jsp");
 			} catch (Exception e) {
 				Logger.println(e);

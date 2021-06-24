@@ -6,8 +6,6 @@ public class Movie {
 	private Integer movieId;
 	private Integer languageId;
 
-	
-	
 	public Movie(Integer languageId, String movieName) {
 		super();
 		this.languageId = languageId;
