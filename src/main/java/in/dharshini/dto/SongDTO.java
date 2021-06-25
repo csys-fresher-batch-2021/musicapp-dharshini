@@ -13,6 +13,10 @@ public class SongDTO {
 	private byte[] songSrc;
 	private byte[] songImageSrc;
 
+	public SongDTO() {
+		super();
+	}
+
 	public SongDTO(Integer hasSong, String songName) {
 		super();
 		this.hasSong = hasSong;

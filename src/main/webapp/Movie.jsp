@@ -27,18 +27,18 @@ body {
 	<jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
 
-		<form action="MovieServlet">
-			<div class="center">
-				<h2 style="color: purple">List Of Available Movies</h2>
-				<br />
-				<%
-				Integer languageId = Integer.parseInt(request.getParameter("languageId"));
-				MovieService movieService = new MovieService();
-				List<Movie> movieList = movieService.getMovies(languageId);
-				%>
+		<div class="center">
+			<h2 style="color: purple">List Of Available Movies</h2>
+			<br />
+			<%
+			Integer languageId = Integer.parseInt(request.getParameter("languageId"));
+			MovieService movieService = new MovieService();
+			List<Movie> movieList = movieService.getMovies(languageId);
+			%>
 
+			<form action="MovieServlet">
 				<select required name="movies" id="movies">
-					<option disabled selected>--Select movie--</option>
+					<option disabled selected value="">--Select movie--</option>
 					<%
 					for (Movie movie : movieList) {
 					%>
@@ -48,8 +48,8 @@ body {
 					%>
 				</select> <br /> <br />
 				<button class="btn btn-secondary" type="submit">OK</button>
-			</div>
-		</form>
+			</form>
+		</div>
 	</main>
 </body>
 </html>

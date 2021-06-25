@@ -28,9 +28,11 @@ public class SongUtilitiesServlet extends HttpServlet {
 		try {
 			SongService songService = new SongService();
 			byte[] songSrc = songService.getSongFile(songName);
+
 			OutputStream obj = response.getOutputStream();
 			obj.write(songSrc);
-		} catch (IOException | DBException e) {
+
+		} catch (DBException e) {
 			Logger.println(e);
 		}
 	}
