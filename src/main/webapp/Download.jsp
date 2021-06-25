@@ -2,7 +2,6 @@
 <%@page import="java.util.List"%>
 <%@page import="in.dharshini.service.SongService"%>
 <%@page import="in.dharshini.dto.SongDTO"%>
-<%@ page import="org.owasp.encoder.Encode"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,23 +36,23 @@ body {
 				<br />
 				<%
 				String songName = request.getParameter("songName");
-				String encodedSongName = Encode.forHtml(songName);
 				%>
 				<audio controls autoplay>
 					<source
-						src="SongUtilitiesServlet?songName=<%=encodedSongName.toLowerCase()%>"
+						src="SongUtilitiesServlet?songName=<%=songName%>"
 						type="audio/ogg">
 					<source
-						src="SongUtilitiesServlet?songName=<%=encodedSongName.toLowerCase()%>"
+						src="SongUtilitiesServlet?songName=<%=songName%>"
 						type="audio/mpeg">
 				</audio>
-				<br /> <br />
+				<br />
+				<br />
 				<div class="c">
 					<img
-						src="SongImageUtilitiesServlet?imageName=<%=encodedSongName.toLowerCase()%>"
-						alt="<%=encodedSongName%>" width="400" height="333"><br /> Song
+						src="SongImageUtilitiesServlet?imageName=<%=songName%>"
+						alt="<%=songName%>" width="400" height="333"><br /> Song
 					Name:
-					<%=encodedSongName%>
+					<%=songName%>
 				</div>
 				<br />
 			</div>

@@ -130,7 +130,7 @@ public class SongDAO {
 		ResultSet result = null;
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "select song_src from songs where Lower(song_name)=?";
+			String sql = "select song_src from songs where song_name=?";
 			pst = connection.prepareStatement(sql);
 			pst.setString(1, songName);
 			result = pst.executeQuery();
@@ -148,23 +148,22 @@ public class SongDAO {
 
 	/**
 	 * This method is used to check whether the song is present in songs db or not
-	 * for search song feature
+	 * for search song feature and returns number of results available for searched
+	 * keyword
 	 *
 	 * @param songName
 	 * @return
 	 */
-	public static SongDTO isSongPresent(Song songName) {
+	public static Integer isSongPresent(Song songName) {
 		Connection connection = null;
 		PreparedStatement pst = null;
-		SongDTO hasSongAndName = null;
 		ResultSet result = null;
 		Integer hasSong = null;
-		String song = null;
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "SELECT COUNT(song_name) FROM songs WHERE LOWER(song_name) = ?";
+			String sql = "SELECT COUNT(song_name) FROM songs WHERE LOWER(song_name) LIKE  '%"
+					+ songName.getSongName().toLowerCase() + "%'";
 			pst = connection.prepareStatement(sql);
-			pst.setString(1, songName.getSongName());
 			result = pst.executeQuery();
 			while (result.next()) {
 				hasSong = result.getInt(1);
@@ -174,22 +173,37 @@ public class SongDAO {
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
+		return hasSong;
+	}
+
+	/**
+	 * This method gives the list of songs available in db for the searched keyword
+	 *
+	 * @param songName
+	 * @return
+	 */
+	public static List<SongDTO> searchSongList(Song songName) {
+		List<SongDTO> searchSongList = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement pst = null;
+		ResultSet result = null;
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "SELECT song_name FROM songs WHERE LOWER(song_name) = ?";
+			String sql = "SELECT song_name FROM songs WHERE LOWER(song_name) LIKE  '%"
+					+ songName.getSongName().toLowerCase() + "%'";
 			pst = connection.prepareStatement(sql);
-			pst.setString(1, songName.getSongName());
 			result = pst.executeQuery();
 			while (result.next()) {
-				song = result.getString("song_name");
+				String song = result.getString("song_name");
+				SongDTO songDto = new SongDTO(song);
+				searchSongList.add(songDto);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			Logger.println(e);
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
-		hasSongAndName = new SongDTO(hasSong, song);
-		return hasSongAndName;
+		return searchSongList;
 	}
 
 	/**
@@ -206,7 +220,7 @@ public class SongDAO {
 		ResultSet result = null;
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "select song_image from songs where LOWER(song_name)=?";
+			String sql = "select song_image from songs where song_name=?";
 			pst = connection.prepareStatement(sql);
 			pst.setString(1, imageName);
 			result = pst.executeQuery();

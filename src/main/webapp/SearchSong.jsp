@@ -1,3 +1,4 @@
+<%@page import="in.dharshini.dto.SongDTO"%>
 <%@ page import="org.owasp.encoder.Encode"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -20,9 +21,9 @@
 }
 
 body {
-	background-image: url("ImageUtilitiesServlet?imageName=Login-Image");
+	background-image: url("ImageUtilitiesServlet?imageName=PlayList-Image");
 	background-repeat: no-repeat;
-	background-size: 103% 300%;
+	background-size: 103% 200%;
 }
 </style>
 </head>
@@ -40,23 +41,62 @@ body {
 
 
 				<%
+				List<SongDTO> searchSongList = (List<SongDTO>) request.getAttribute("searchSongList");
 				String errorMessage = request.getParameter("errorMessage");
-				String songName = request.getParameter("songName");
-				String encodedSongName = Encode.forHtml(songName);
+				String noOfSearchResult = (String) request.getAttribute("noOfSearchResult");
+				String encodedNoOfSearchResult = Encode.forHtml(noOfSearchResult);
 				if (errorMessage != null) {
 					String encodedErrorMessage = Encode.forHtml(errorMessage);
 					out.println("<font color='red' size='5px'>" + encodedErrorMessage + "</font");
-				} else if (songName != null) {
+				} else if (searchSongList!=null) {
 				%>
-				<h3 style="color: darkturquoise">Result For The Search</h3>
+				<h3 style="color: deeppink">
+					No Of Results For The Search:
+					<%=encodedNoOfSearchResult%></h3>
 
 				<div class="c">
-					<label style="color: gold">Song : <%=encodedSongName%></label>
+
+					<table class="table table_bordered">
+						<caption>searched song results</caption>
+						<thead>
+							<tr>
+								<th scope="col">S.No.</th>
+								<th scope="col">Song Name</th>
+								<th scope="col">Play</th>
+								<th scope="col">Playlist</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%
+							int i = 0;
+							for (SongDTO songdto : searchSongList) {
+								i++;
+							%>
+							<tr>
+								<td><%=i%>.</td>
+								<td><%=songdto.getSongName()%></td>
+								<td><a class="btn btn-primary"
+									href="Download.jsp?songName=<%=songdto.getSongName()%>">Play</a>
+									<br /></td>
+								<td><a class="btn btn-primary"
+									href="AddToPlaylist?song=<%=songdto.getSongName()%>">Add To
+										Playlist</a>
+							</tr>
+							<%
+							}
+							%>
+						</tbody>
+					</table>
+
+				</div>
+
+				<%-- 
+					<label style="color: gold">Song : <%=songName%></label>
 				</div>
 				<br /> <a class="btn btn-primary"
-					href="Download.jsp?songName=<%=encodedSongName%>" role="submit">Play</a>
-				<br /> <br /> <a class="btn btn-primary"
-					href="AddToPlaylist?song=<%=encodedSongName%>">Add To Playlist</a>
+					href="Download.jsp?songName=<%=songName%>" role="submit">Play</a> <br />
+				<br /> <a class="btn btn-primary"
+					href="AddToPlaylist?song=<%=songName%>">Add To Playlist</a> --%>
 				<%
 				}
 				%>

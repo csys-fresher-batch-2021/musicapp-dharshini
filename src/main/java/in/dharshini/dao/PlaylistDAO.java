@@ -113,6 +113,7 @@ public class PlaylistDAO {
 			pst.setInt(1, userId.getUserId());
 			pst.executeUpdate();
 		} catch (SQLException | ClassNotFoundException e) {
+			Logger.println(e);
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}

@@ -25,18 +25,17 @@ body {
 	<jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
 
-		<form action="SongServlet">
-			<div class="center">
-				<h2 style="color: purple">List Of Available Songs</h2>
-				<br />
-				<%
-				Integer movieId = Integer.parseInt(request.getParameter("movieId"));
-				SongService songService = new SongService();
-				List<Song> songList = songService.getSongsNames(movieId);
-				%>
+		<div class="center">
+			<h2 style="color: purple">List Of Available Songs</h2>
+			<br />
+			<%
+			Integer movieId = Integer.parseInt(request.getParameter("movieId"));
+			SongService songService = new SongService();
+			List<Song> songList = songService.getSongsNames(movieId);
+			%>
+			<form action="SongServlet">
 				<select name="song" required>
-
-					<option disabled selected>--Select song--</option>
+					<option disabled selected value="">--Select song--</option>
 					<%
 					for (Song song : songList) {
 					%>
@@ -46,9 +45,8 @@ body {
 					%>
 				</select> <br /> <br />
 				<button class="btn btn-secondary" type="submit">OK</button>
-
-			</div>
-		</form>
+			</form>
+		</div>
 	</main>
 </body>
 </html>

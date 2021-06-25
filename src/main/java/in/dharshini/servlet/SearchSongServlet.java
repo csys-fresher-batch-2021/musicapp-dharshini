@@ -1,7 +1,10 @@
 package in.dharshini.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,16 +29,21 @@ public class SearchSongServlet extends HttpServlet {
 		String errorMessage = "Sorry. No Results Found. Please make sure your words are spelled correctly or use less or different keywords";
 
 		SongService songService = new SongService();
-		Song songName = new Song(searchedSong.toLowerCase());
+		Song songName = new Song(searchedSong);
 
-		SongDTO hasSongAndName = songService.isSongPresent(songName);
+		Integer hasSong = songService.isSongPresent(songName);
+		String noOfSearchResult = Integer.toString(hasSong);
 		try {
-			if (hasSongAndName.getHasSong() == 1) {
-				response.sendRedirect("SearchSong.jsp?songName=" + hasSongAndName.getSongName());
+			if (hasSong > 0) {
+				List<SongDTO> searchSongList = songService.getSearchSongList(songName);
+				RequestDispatcher rd = request.getRequestDispatcher("SearchSong.jsp");
+				request.setAttribute("noOfSearchResult", noOfSearchResult);
+				request.setAttribute("searchSongList", searchSongList);
+				rd.forward(request, response);
 			} else {
 				response.sendRedirect("SearchSong.jsp?errorMessage=" + errorMessage);
 			}
-		} catch (IOException e) {
+		} catch (IOException | ServletException e) {
 			Logger.println(e);
 		}
 	}

@@ -63,12 +63,25 @@ public class SongService {
 	}
 
 	/**
-	 * Checks whether song is available in database or not
+	 * Checks whether song is available in database or not and gives no of search
+	 * results for the keyword
 	 *
 	 * @param song
 	 * @return
+	 * @return
 	 */
-	public SongDTO isSongPresent(Song song) {
+	public Integer isSongPresent(Song song) {
 		return SongDAO.isSongPresent(song);
 	}
+
+	/**
+	 * This method gives list of songs available for searched keyword
+	 *
+	 * @param songName
+	 * @return
+	 */
+	public List<SongDTO> getSearchSongList(Song songName) {
+		return SongDAO.searchSongList(songName);
+	}
+
 }

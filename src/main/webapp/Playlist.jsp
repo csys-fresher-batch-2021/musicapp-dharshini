@@ -48,14 +48,12 @@ body {
 		<form action=SearchSongServlet>
 			<div class="center">
 				<%
-				String play = null;
 				List<Playlist> playlistDetailsList = (List<Playlist>) request.getAttribute("list");
 				String errorMessage = request.getParameter("errorMessage");
 				String infoMessage = request.getParameter("infoMessage");
 				String infoMessage2 = request.getParameter("infoMessage2");
 
 				String songName = (String) session.getAttribute("songName");
-				String encodedSongName = Encode.forHtml(songName);
 				if (errorMessage != null) {
 					String encodedErrorMessage = Encode.forHtml(errorMessage);
 					out.println("<f>" + encodedErrorMessage + "</f>");
@@ -67,11 +65,11 @@ body {
 				<h3 style="color: purple">Your Playlist</h3>
 				<audio controls autoplay>
 					<%
-					if (encodedSongName != null) {
+					if (songName != null) {
 					%>
-					<source src="SongUtilitiesServlet?songName=<%=encodedSongName%>"
+					<source src="SongUtilitiesServlet?songName=<%=songName%>"
 						type="audio/ogg">
-					<source src="SongUtilitiesServlet?songName=<%=encodedSongName%>"
+					<source src="SongUtilitiesServlet?songName=<%=songName%>"
 						type="audio/mpeg">
 					<%
 					}
@@ -89,7 +87,7 @@ body {
 						<tr>
 							<th scope="col">S.No.</th>
 							<th scope="col">Song Name</th>
-							<th scope="col">Play/Download</th>
+							<th scope="col">Play</th>
 							<th scope="col">Remove</th>
 						</tr>
 					</thead>
@@ -97,7 +95,6 @@ body {
 						<%
 						int i = 0;
 						for (Playlist playlist : playlistDetailsList) {
-							play = playlist.getPlaylistSongName();
 							i++;
 						%>
 						<tr>

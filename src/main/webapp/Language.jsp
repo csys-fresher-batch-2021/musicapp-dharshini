@@ -24,18 +24,19 @@ body {
 	<jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
 
-		<form action="LanguageServlet">
-			<div class="center">
-				<h1 style="color: darkturquoise">Enjoy Your Favourite Music</h1>
-				<br />
-				<h2 style="color: purple">List Of Available Languages</h2>
-				<br />
-				<%
-				List<Language> languageList = LanguageDAO.getAllLanguages();
-				%>
 
-				<select name="languages" required>
-					<option disabled selected>--Select language--</option>
+		<div class="center">
+			<h1 style="color: darkturquoise">Enjoy Your Favourite Music</h1>
+			<br />
+			<h2 style="color: purple">List Of Available Languages</h2>
+			<br />
+			<%
+			List<Language> languageList = LanguageDAO.getAllLanguages();
+			%>
+
+			<form action="LanguageServlet">
+				<select name="languages" id="languages" required>
+					<option disabled selected value="">--Select language--</option>
 					<%
 					for (Language language : languageList) {
 					%>
@@ -45,10 +46,11 @@ body {
 					%>
 				</select> <br /> <br />
 				<button class="btn btn-secondary" type="submit">OK</button>
+			</form>
+		</div>
 
-			</div>
-		</form>
 	</main>
+
 </body>
 </html>
 
