@@ -8,6 +8,8 @@ import in.dharshini.userexception.DBException;
 
 public class LanguageService {
 
+	LanguageDAO languageDao = new LanguageDAO();
+
 	/**
 	 * This method calls the addLanguages() in language DAO to add languages to the
 	 * database
@@ -15,8 +17,8 @@ public class LanguageService {
 	 * @param langName
 	 * @throws DBException
 	 */
-	public static boolean addLanguage(Language langName) {
-		return LanguageDAO.addLanguages(langName);
+	public boolean addLanguage(Language langName) throws DBException {
+		return languageDao.addLanguages(langName);
 	}
 
 	/**
@@ -26,7 +28,7 @@ public class LanguageService {
 	 * @throws DBException
 	 */
 	public List<Language> getLanguages() throws DBException {
-		return LanguageDAO.getAllLanguages();
+		return languageDao.getAllLanguages();
 	}
 
 	/**
@@ -35,8 +37,9 @@ public class LanguageService {
 	 *
 	 * @param langName
 	 * @return
+	 * @throws DBException
 	 */
-	public static boolean removeLanguage(Language langName) {
-		return LanguageDAO.removeLanguages(langName);
+	public boolean removeLanguage(Language langName) throws DBException {
+		return languageDao.removeLanguages(langName);
 	}
 }

@@ -15,7 +15,7 @@
 .border1 {
 	border: 10px solid gray;
 	display: inline-block;
-	height: 380px;
+	height: 400px;
 	border-width: 2px;
 	padding: 20px;
 	border-radius: 8px;
@@ -43,25 +43,21 @@ p1 {
 
 	<jsp:include page="AdminHeader.jsp"></jsp:include>
 	<main class="container-fluid">
-
-		<form action="AddSongServlet">
+		<form action="AddSongServlet" enctype="multipart/form-data" method="POST">
 			<div class="center">
-				<h1>Add Song</h1>
+				<h2>Add Movie Song</h2>
 				<div class="border1">
 					<label>Language Id</label> <input type="text" name="languageId"
-						id="languageId" required autofocus /> <br /> <br /> <label>Movie
+						id="languageId" required  /> <br /> <br /> <label>Movie
 						Id</label> <input type="text" name="movieId" id="movieId" required /> <br />
 					<br /> <label>Song Name</label> <input type="text" name="songName"
-						id="songName" required /><br /> <br /> <label>Song File</label>
-					<input type="file" name="songFile" id="songFile" accept="mp3/*"
-						required /> <br /> <br /> <label>Song Image</label> <input
-						type="file" name="songImage" id="songImage" accept="image/*"
-						required /> <br /> <br />
+						id="songName" required /><br /> <br /> <label>Singers</label> <input
+						type="text" name="singers" id="singers" required /><br /> <br />
+					<label>Song File</label> <input type="file" name="songFile"
+						id="songFile" accept=".mp3" required /> <br /> <br />
 					<button class="btn btn-secondary">Add</button>
 					<button class="btn btn-danger">Reset</button>
 					<br />
-
-
 					<%
 					String errorMessage = (String) request.getParameter("errorMessage");
 					if (errorMessage != null) {
@@ -80,9 +76,8 @@ p1 {
 		</form>
 		<form action="RemoveSongServlet">
 			<div class="center">
-				<h3>Delete song</h3>
+				<h3>Delete Movie song</h3>
 				<div class="border2">
-
 					<label>Song To Be Deleted</label> <input type="text" name="song"
 						id="song" required /><br /> <br />
 					<button class="btn btn-danger">Remove</button>
@@ -103,7 +98,6 @@ p1 {
 				</div>
 			</div>
 		</form>
-
-	</main>
+			</main>
 </body>
 </html>

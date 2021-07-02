@@ -1,20 +1,59 @@
 package in.dharshini.dto;
 
+import java.sql.Date;
+
 public class SongDTO {
 
 	private Integer languageId;
 	private Integer hasSong;
 	private Integer movieId;
 	private String songName;
+	private String movieName;
+	private String musicDirector;
+	private String singers;
 
 	private String songFile;
-	private String songImage;
+	private String movieImage;
 
 	private byte[] songSrc;
 	private byte[] songImageSrc;
 
-	public SongDTO() {
+	private Date movieReleasedDate;
+
+	public SongDTO(Integer languageId, Integer movieId, String songName, String movieName, String musicDirector,
+			String singers, String songFile, Date movieReleasedDate) {
 		super();
+		this.languageId = languageId;
+		this.movieId = movieId;
+		this.songName = songName;
+		this.movieName = movieName;
+		this.musicDirector = musicDirector;
+		this.singers = singers;
+		this.songFile = songFile;
+		this.movieReleasedDate = movieReleasedDate;
+	}
+
+	public SongDTO(String musicDirector, Date movieReleaseDate) {
+		super();
+		this.musicDirector = musicDirector;
+		this.movieReleasedDate = movieReleaseDate;
+	}
+
+	public SongDTO(String songName, String movieName, String musicDirector, String singers, Date movieReleaseDate) {
+		super();
+		this.songName = songName;
+		this.movieName = movieName;
+		this.musicDirector = musicDirector;
+		this.singers = singers;
+		this.movieReleasedDate = movieReleaseDate;
+	}
+
+	public Date getMovieReleasedDate() {
+		return movieReleasedDate;
+	}
+
+	public void setMovieReleasedDate(Date movieReleasedDate) {
+		this.movieReleasedDate = movieReleasedDate;
 	}
 
 	public SongDTO(Integer hasSong, String songName) {
@@ -23,9 +62,9 @@ public class SongDTO {
 		this.songName = songName;
 	}
 
-	public SongDTO(String songName) {
+	public SongDTO(String movieName) {
 		super();
-		this.songName = songName;
+		this.movieName = movieName;
 	}
 
 	public SongDTO(byte[] songSrc) {
@@ -39,13 +78,51 @@ public class SongDTO {
 		this.songImageSrc = songImageSource;
 	}
 
+	public SongDTO(byte[] songImageSrc, String movieName, String songName) {
+		super();
+		this.songImageSrc = songImageSrc;
+		this.movieName = movieName;
+		this.songName = songName;
+	}
+
 	public SongDTO(Integer languageId, Integer movieId, String songName, String songFile, String songImage) {
 		super();
 		this.languageId = languageId;
 		this.movieId = movieId;
 		this.songName = songName;
 		this.songFile = songFile;
-		this.songImage = songImage;
+		this.movieImage = songImage;
+	}
+
+	public SongDTO(String songName, String movieName) {
+		super();
+		this.songName = songName;
+		this.movieName = movieName;
+
+	}
+
+	public String getMusicDirector() {
+		return musicDirector;
+	}
+
+	public void setMusicDirector(String musicDirector) {
+		this.musicDirector = musicDirector;
+	}
+
+	public String getSingers() {
+		return singers;
+	}
+
+	public void setSingers(String singers) {
+		this.singers = singers;
+	}
+
+	public String getMovieName() {
+		return movieName;
+	}
+
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
 	}
 
 	public Integer getHasSong() {
@@ -89,11 +166,11 @@ public class SongDTO {
 	}
 
 	public String getSongImage() {
-		return songImage;
+		return movieImage;
 	}
 
 	public void setSongImage(String songImage) {
-		this.songImage = songImage;
+		this.movieImage = songImage;
 	}
 
 	public byte[] getSongSrc() {

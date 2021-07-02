@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import in.dharshini.dao.PlaylistDAO;
 import in.dharshini.model.Playlist;
+import in.dharshini.service.PlaylistService;
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
@@ -35,9 +35,9 @@ public class PlaylistServlet extends HttpServlet {
 		session.setAttribute("songName", songName);
 		Integer userId = (Integer) session.getAttribute("userId");
 		Playlist playlist = new Playlist(userId);
-		PlaylistDAO playlistDao = new PlaylistDAO();
+		PlaylistService playlistService = new PlaylistService();
 		try {
-			playlistList = playlistDao.getAllPlaylistSongs(playlist);
+			playlistList = playlistService.getAllPlaylistSongs(playlist);
 			String errorMessage = request.getParameter("errorMessage");
 			String infoMessage = request.getParameter("infoMessage");
 

@@ -8,7 +8,27 @@ import in.dharshini.userexception.DBException;
 import in.dharshini.userexception.ServiceException;
 import in.dharshini.util.Logger;
 
-public class LoginService {
+public class UserService {
+	InputValidator validator = new InputValidator();
+
+	/**
+	 * This method checks whether the registration input credentials are in correct
+	 * format and not already registered user
+	 *
+	 * @param newMail
+	 * @param newPassword
+	 * @return
+	 * @throws DBException
+	 */
+	public boolean checkNotRegisteredUser(User user) throws DBException {
+		boolean isValid = false;
+		if ((validator.isValidMailIdAndPassword(user.getMailId(), user.getPassword()))
+				&& !(checkUserForLogin(user.getMailId(), user.getPassword()))) {
+			isValid = true;
+			UserDAO.addUser(user);
+		}
+		return isValid;
+	}
 
 	/**
 	 * This method validates the user input details for correct format and call
@@ -20,10 +40,10 @@ public class LoginService {
 	 * @return
 	 */
 
-	public static boolean loginDetailCheck(User user) {
+	public boolean loginDetailCheck(User user) {
 		boolean isValid = false;
 		try {
-			if (InputValidator.isValidMailIdAndPassword(user.getMailId(), user.getPassword())
+			if (validator.isValidMailIdAndPassword(user.getMailId(), user.getPassword())
 					&& checkUserForLogin(user.getMailId(), user.getPassword())) {
 				isValid = true;
 			}
@@ -31,6 +51,18 @@ public class LoginService {
 			Logger.println(e);
 		}
 		return isValid;
+	}
+
+	/**
+	 * This method gets the particular user_id with the help of email from users db
+	 *
+	 * @param mailId
+	 * @return
+	 * @throws DBException
+	 */
+	public User getParticularUserDetails(User mailId) throws DBException {
+		UserDAO userDao = new UserDAO();
+		return (userDao.getParticularUserDetails(mailId));
 	}
 
 	/**
@@ -42,7 +74,7 @@ public class LoginService {
 	 * @return
 	 */
 
-	public static boolean checkUserForLogin(String inputMailId, String inputPassword) {
+	public boolean checkUserForLogin(String inputMailId, String inputPassword) {
 		boolean isValid = false;
 		try {
 			Set<String> mailSet = UserDAO.getAllRegisteredUser().keySet();
@@ -65,7 +97,7 @@ public class LoginService {
 	 * @param user
 	 * @return
 	 */
-	public static boolean adminLoginCheck(User user) {
+	public boolean adminLoginCheck(User user) {
 		boolean isValid = false;
 		try {
 			if ((user.getMailId().equals("admin@gmail.com")) && (user.getPassword().equals("Admin@123"))) {
@@ -82,17 +114,18 @@ public class LoginService {
 	 *
 	 * @param user
 	 * @return
+	 * @return
 	 * @throws ServiceException
 	 * @throws DBException
 	 */
-	public boolean updatePassword(User user) throws ServiceException, DBException {
+	public boolean updatePassword(User user) throws DBException, ServiceException {
 		boolean isUpdated = false;
 
-		if (!(InputValidator.isValidMailIdAndPassword(user.getMailId(), user.getPassword()))) {
+		if (!(validator.isValidMailIdAndPassword(user.getMailId(), user.getPassword()))) {
 			throw new ServiceException("Mail Id or Password is in Incorrect Format");
 		} else if (!(checkUserForPasswordUpdate(user.getMailId()))) {
 			throw new DBException("Entered Mailid is Not registered");
-		} else if (InputValidator.isValidMailIdAndPassword(user.getMailId(), user.getPassword())
+		} else if (validator.isValidMailIdAndPassword(user.getMailId(), user.getPassword())
 				&& checkUserForPasswordUpdate(user.getMailId())) {
 			isUpdated = true;
 			UserDAO userDao = new UserDAO();
@@ -102,13 +135,13 @@ public class LoginService {
 	}
 
 	/**
-	 * This method is used to check whether the input mailId in uodate password
+	 * This method is used to check whether the input mailId in update password
 	 * feature is registered mailId or not
 	 *
 	 * @param inputMailId
 	 * @return
 	 */
-	public static boolean checkUserForPasswordUpdate(String inputMailId) {
+	public boolean checkUserForPasswordUpdate(String inputMailId) {
 		boolean isValid = false;
 		try {
 			Set<String> mailSet = UserDAO.getAllRegisteredUser().keySet();

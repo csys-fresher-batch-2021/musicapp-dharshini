@@ -15,7 +15,7 @@
 .border1 {
 	border: 10px solid gray;
 	display: inline-block;
-	height: 210px;
+	height: 380px;
 	border-width: 2px;
 	padding: 20px;
 	border-radius: 8px;
@@ -50,7 +50,12 @@ p1 {
 				<div class="border1">
 					<label>Language Id</label> <input type="text" name="languageId"
 						id="languageId" autofocus required /> <br /> <br /> <label>Movie
-						To Be Updated</label> <input type="text" name="movie" id="movie" required /><br />
+						Name</label> <input type="text" name="movie" id="movie" required /><br />
+					<br /> <label>Music Director</label> <input type="text"
+						name="musicDirector" id="musicDirector" required /><br /> <br /> <label>Movie
+						Release Date</label> <input type="date" name="movieReleaseDate" id="movieReleaseDate"
+						required /><br /> <br /> <label>Movie Poster Image</label> <input
+						type="file" name="movieImage" id="movieImage" accept=".jpg" required /><br />
 					<br />
 					<button class="btn btn-secondary">Add</button>
 					<br />
@@ -75,7 +80,6 @@ p1 {
 			<div class="center">
 				<h3>Delete Movie</h3>
 				<div class="border2">
-
 					<label>Movie To Be Deleted</label> <input type="text" name="movie"
 						id="movie" required /><br /> <br />
 					<button class="btn btn-danger">Remove</button>

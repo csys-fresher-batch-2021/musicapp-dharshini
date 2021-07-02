@@ -1,6 +1,7 @@
 package in.dharshini.servlet;
 
 import java.io.IOException;
+import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.dharshini.model.Movie;
 import in.dharshini.service.MovieService;
+import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
 /**
@@ -26,7 +28,11 @@ public class AddMovieServlet extends HttpServlet {
 		try {
 			Integer languageId = Integer.parseInt(request.getParameter("languageId"));
 			String movieName = request.getParameter("movie");
-			Movie movie = new Movie(languageId, movieName);
+			String musicDirector = request.getParameter("musicDirector");
+			String movieDate = request.getParameter("movieReleaseDate");
+			Date movieReleaseDate = Date.valueOf(movieDate);
+			String movieImage = request.getParameter("movieImage");
+			Movie movie = new Movie(languageId, movieName, musicDirector, movieReleaseDate, movieImage);
 			boolean isDone = false;
 			String errorMessage = "Cannot Add Movie. Check Input Details";
 			String message = "Successfully added";
@@ -37,7 +43,7 @@ public class AddMovieServlet extends HttpServlet {
 			} else {
 				response.sendRedirect("AddOrDeleteMovie.jsp?errorMessage=" + errorMessage);
 			}
-		} catch (NumberFormatException | IOException e) {
+		} catch (NumberFormatException | IOException | DBException e) {
 			Logger.println(e);
 		}
 	}

@@ -17,17 +17,16 @@
 }
 
 body {
-	background-image: url("ImageUtilitiesServlet?imageName=Login-Image");
-	background-repeat: no-repeat;
-	background-size: 103% 200%;
+		background-color: #1affa3;
 }
 </style>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<main class="container-fluid">
 
-		<div class="center">
+		<div class="main center">
+			<h1 style="color: deeppink">Enjoy Your Favourite Music</h1>
+			<br />
 			<h2 style="color: purple">List Of Available Movies</h2>
 			<br />
 			<%
@@ -42,7 +41,7 @@ body {
 					<%
 					for (Movie movie : movieList) {
 					%>
-					<option value="<%=movie.getMovieId()%>"><%=movie.getMovieName()%></option>
+					<option value="<%=movie.getMovieName()%>"><%=movie.getMovieName()%></option>
 					<%
 					}
 					%>

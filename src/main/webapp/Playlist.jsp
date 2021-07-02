@@ -35,85 +35,81 @@ f {
 }
 
 body {
-	background-image: url("ImageUtilitiesServlet?imageName=PlayList-Image");
-	background-repeat: no-repeat;
-	background-size: 103% 100%;
+	background-color: #1affa3;
 }
 </style>
 </head>
 
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<main class="container-fluid">
-		<form action=SearchSongServlet>
-			<div class="center">
-				<%
-				List<Playlist> playlistDetailsList = (List<Playlist>) request.getAttribute("list");
-				String errorMessage = request.getParameter("errorMessage");
-				String infoMessage = request.getParameter("infoMessage");
-				String infoMessage2 = request.getParameter("infoMessage2");
+	<form action=SearchSongServlet>
+		<div class="main center">
+			<%
+			List<Playlist> playlistDetailsList = (List<Playlist>) request.getAttribute("list");
+			String errorMessage = request.getParameter("errorMessage");
+			String infoMessage = request.getParameter("infoMessage");
+			String infoMessage2 = request.getParameter("infoMessage2");
 
-				String songName = (String) session.getAttribute("songName");
-				if (errorMessage != null) {
-					String encodedErrorMessage = Encode.forHtml(errorMessage);
-					out.println("<f>" + encodedErrorMessage + "</f>");
-				} else if (infoMessage != null) {
-					String encodedInfoMessage = Encode.forHtml(infoMessage);
-					out.println("<p>" + encodedInfoMessage + "</p>");
+			String songName = (String) session.getAttribute("songName");
+			if (errorMessage != null) {
+				String encodedErrorMessage = Encode.forHtml(errorMessage);
+				out.println("<f>" + encodedErrorMessage + "</f>");
+			} else if (infoMessage != null) {
+				String encodedInfoMessage = Encode.forHtml(infoMessage);
+				out.println("<p>" + encodedInfoMessage + "</p>");
+			}
+			%>
+			<h3 style="color: purple">Your Playlist</h3>
+			<audio controls autoplay>
+				<%
+				if (songName != null) {
+				%>
+				<source src="SongUtilitiesServlet?songName=<%=songName%>"
+					type="audio/ogg">
+				<source src="SongUtilitiesServlet?songName=<%=songName%>"
+					type="audio/mpeg">
+				<%
+				session.removeAttribute("songName");
 				}
 				%>
-				<h3 style="color: purple">Your Playlist</h3>
-				<audio controls autoplay>
+			</audio>
+			<div class="right">
+				<a class="btn btn-danger" href="ClearPlaylistServlet">Clear
+					Playlist</a>
+			</div>
+			<br /> <br /> <br />
+			<table class="table table_bordered">
+				<caption>List Of songs in Playlist</caption>
+				<thead>
+					<tr>
+						<th scope="col">S.No.</th>
+						<th scope="col">Song Name</th>
+						<th scope="col">Play</th>
+						<th scope="col">Remove</th>
+					</tr>
+				</thead>
+				<tbody>
 					<%
-					if (songName != null) {
+					int i = 0;
+					for (Playlist playlist : playlistDetailsList) {
+						i++;
 					%>
-					<source src="SongUtilitiesServlet?songName=<%=songName%>"
-						type="audio/ogg">
-					<source src="SongUtilitiesServlet?songName=<%=songName%>"
-						type="audio/mpeg">
+					<tr>
+						<td><%=i%>.</td>
+						<td><%=playlist.getPlaylistSongName()%></td>
+						<td><a class="btn btn-primary"
+							href="PlaylistServlet?songName=<%=playlist.getPlaylistSongName()%>">Play</a>
+							<br /></td>
+						<td><a class="btn btn-danger"
+							href="RemovePlaylistServlet?song=<%=playlist.getPlaylistSongName()%>">Remove</a>
+					</tr>
 					<%
 					}
 					%>
-				</audio>
-
-				<div class="right">
-					<a class="btn btn-danger" href="ClearPlaylistServlet">Clear
-						Playlist</a>
-				</div>
-				<br /> <br /> <br />
-				<table class="table table_bordered">
-					<caption>List Of songs in Playlist</caption>
-					<thead>
-						<tr>
-							<th scope="col">S.No.</th>
-							<th scope="col">Song Name</th>
-							<th scope="col">Play</th>
-							<th scope="col">Remove</th>
-						</tr>
-					</thead>
-					<tbody>
-						<%
-						int i = 0;
-						for (Playlist playlist : playlistDetailsList) {
-							i++;
-						%>
-						<tr>
-							<td><%=i%>.</td>
-							<td><%=playlist.getPlaylistSongName()%></td>
-							<td><a class="btn btn-primary"
-								href="PlaylistServlet?songName=<%=playlist.getPlaylistSongName()%>">Play</a>
-								<br /></td>
-							<td><a class="btn btn-danger"
-								href="RemovePlaylistServlet?song=<%=playlist.getPlaylistSongName()%>">Remove</a>
-						</tr>
-						<%
-						}
-						%>
-					</tbody>
-				</table>
-				<a href="SearchSong.jsp">Add More Songs To Your Playlist</a>
-			</div>
-		</form>
-	</main>
+				</tbody>
+			</table>
+			<a href="SearchSong.jsp">Add More Songs To Your Playlist</a>
+		</div>
+	</form>
 </body>
 </html>

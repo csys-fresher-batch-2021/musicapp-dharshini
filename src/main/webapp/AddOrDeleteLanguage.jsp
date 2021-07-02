@@ -36,7 +36,6 @@ p1 {
 				<button class="btn btn-danger" type="button"
 					onclick="removeLanguage()">Remove</button>
 				<br /> <br />
-
 				<%
 				String errorMessage = (String) request.getParameter("errorMessage");
 				if (errorMessage != null) {
@@ -58,7 +57,6 @@ p1 {
 				document.location.href = "/app/AddLanguageServlet?language="
 						+ language;
 			}
-
 			function removeLanguage() {
 				let language = document.getElementById('language').value;
 				document.location.href = "/app/RemoveLanguageServlet?language="

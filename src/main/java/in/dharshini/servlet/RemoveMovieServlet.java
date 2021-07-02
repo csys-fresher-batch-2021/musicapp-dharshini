@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.dharshini.model.Movie;
 import in.dharshini.service.MovieService;
+import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
 /**
@@ -36,7 +37,7 @@ public class RemoveMovieServlet extends HttpServlet {
 			} else {
 				response.sendRedirect("AddOrDeleteMovie.jsp?errorMessage=" + errorMessage1);
 			}
-		} catch (IOException e) {
+		} catch (IOException | DBException e) {
 			Logger.println(e);
 		}
 

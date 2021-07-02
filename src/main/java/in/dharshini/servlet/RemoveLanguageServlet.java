@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.dharshini.model.Language;
 import in.dharshini.service.LanguageService;
+import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
 /**
@@ -22,19 +23,21 @@ public class RemoveLanguageServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		LanguageService languageService = new LanguageService();
+
 		String languageName = request.getParameter("language");
 		Language langName = new Language(languageName);
 		boolean isDone = false;
 		String errorMessage = "Cannot remove language. Language Does Not Exist";
 		String message = "Successfully Removed";
 		try {
-			isDone = LanguageService.removeLanguage(langName);
+			isDone = languageService.removeLanguage(langName);
 			if (isDone) {
 				response.sendRedirect("AddOrDeleteLanguage.jsp?message=" + message);
 			} else {
 				response.sendRedirect("AddOrDeleteLanguage.jsp?errorMessage=" + errorMessage);
 			}
-		} catch (IOException e) {
+		} catch (IOException | DBException e) {
 			Logger.println(e);
 		}
 

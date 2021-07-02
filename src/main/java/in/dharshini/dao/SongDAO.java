@@ -1,9 +1,9 @@
 package in.dharshini.dao;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,47 +11,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.dharshini.dto.SongDTO;
+import in.dharshini.model.Movie;
 import in.dharshini.model.Song;
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.ConnectionUtil;
-import in.dharshini.util.Logger;
 
 public class SongDAO {
-	private SongDAO() {
-		// Default constructor
-	}
 
 	/**
 	 * This method is used to add songs src and details to db
 	 *
 	 * @param songDetails
 	 * @return
+	 * @throws DBException
 	 */
-	public static boolean addSong(SongDTO songDetails) {
+	public boolean addSong(Song songDetails) throws DBException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		boolean isDone = false;
-		try {
-			File songSource = new File("E:\\musicapp-dharshini\\ProjectUtilities\\" + songDetails.getSongFile());
-			File imageSource = new File("E:\\musicapp-dharshini\\ProjectUtilities\\" + songDetails.getSongImage());
 
-			try (FileInputStream fisObj1 = new FileInputStream(songSource);
-					FileInputStream fisObj2 = new FileInputStream(imageSource);) {
-				connection = ConnectionUtil.getConnection();
-				String sql = "insert into songs(language_id,movie_id,song_name,song_src,song_image) values (?,?,?,?,?)";
-
-				pst = connection.prepareStatement(sql);
-				pst.setInt(1, songDetails.getLanguageId());
-				pst.setInt(2, songDetails.getMovieId());
-				pst.setString(3, songDetails.getSongName());
-				pst.setBinaryStream(4, fisObj1);
-				pst.setBinaryStream(5, fisObj2);
-
-				pst.executeUpdate();
-				isDone = true;
-			}
+		try (FileInputStream fisObj1 = new FileInputStream(songDetails.getSongFile())) {
+			connection = ConnectionUtil.getConnection();
+			String sql = "insert into songs(language_id,movie_id,song_name,singers,song_src) values (?,?,?,?,?)";
+			pst = connection.prepareStatement(sql);
+			pst.setInt(1, songDetails.getLanguageid());
+			pst.setInt(2, songDetails.getMovieId());
+			pst.setString(3, songDetails.getSongName());
+			pst.setString(4, songDetails.getSingers());
+			pst.setBinaryStream(5, fisObj1);
+			pst.executeUpdate();
+			isDone = true;
 		} catch (ClassNotFoundException | IOException | SQLException e) {
-			Logger.println(e);
+			throw new DBException(e, "Sorry. Cannot add Song into db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
@@ -63,8 +54,9 @@ public class SongDAO {
 	 *
 	 * @param songName
 	 * @return
+	 * @throws DBException
 	 */
-	public static boolean removeSongs(Song songName) {
+	public boolean removeSongs(Song songName) throws DBException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		boolean isDone = false;
@@ -73,15 +65,42 @@ public class SongDAO {
 			String sql = "delete from songs where song_name= ?";
 			pst = connection.prepareStatement(sql);
 			pst.setString(1, songName.getSongName());
-
 			pst.executeUpdate();
 			isDone = true;
 		} catch (ClassNotFoundException | SQLException e) {
-			Logger.println(e);
+			throw new DBException(e, "Sorry. Cannot remove Song from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
 		return isDone;
+	}
+
+	/**
+	 * This method is used to check whether song is present in db or not
+	 *
+	 * @param songName
+	 * @return
+	 * @throws DBException
+	 */
+	public boolean isSongPresent(String songName) throws DBException {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		boolean isExist = false;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "select exists(select from songs where song_name=?)";
+			pst = connection.prepareStatement(sql);
+			pst.setString(1, songName);
+			ResultSet result = pst.executeQuery();
+			while (result.next()) {
+				isExist = result.getBoolean("exists");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new DBException(e, "Sorry. Cannot check Song is present in db");
+		} finally {
+			ConnectionUtil.close(pst, connection);
+		}
+		return isExist;
 	}
 
 	/**
@@ -91,29 +110,61 @@ public class SongDAO {
 	 * @return
 	 * @throws DBException
 	 */
-	public static List<Song> getAllSongNames(Integer movieId) throws DBException {
+	public List<Song> getAllSongNames(Movie movieName) throws DBException {
 		final List<Song> songsList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pst = null;
 
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "select song_id,song_name from songs where movie_id = ?";
+			String sql = "SELECT songs.song_name from songs inner join movies on movies.movie_id=songs.movie_id where movie = ?";
 			pst = connection.prepareStatement(sql);
-			pst.setInt(1, movieId);
+			pst.setString(1, movieName.getMovieName());
 			ResultSet result = pst.executeQuery();
 			while (result.next()) {
-				Integer songId = result.getInt("song_id");
 				String songName = result.getString("song_name");
-				Song song = new Song(songName, songId);
+				Song song = new Song(songName);
 				songsList.add(song);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new DBException(e, "Sorry. Cannot List user details from db");
+			throw new DBException(e, "Sorry. Cannot get Song list from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
 		return songsList;
+	}
+
+	/**
+	 * This method gives the list of songs available in db for the searched keyword
+	 *
+	 * @param songName
+	 * @return
+	 * @throws DBException
+	 */
+	public List<SongDTO> searchSongList(Song songName) throws DBException {
+		List<SongDTO> searchSongList = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "SELECT movies.movie,songs.song_name from movies INNER JOIN songs on movies.movie_id=songs.movie_id WHERE LOWER(song_name) LIKE  '"
+					+ songName.getSongName().toLowerCase() + "%'";
+			pst = connection.prepareStatement(sql);
+
+			result = pst.executeQuery();
+			while (result.next()) {
+				String song = result.getString("song_name");
+				String movie = result.getString("movie");
+				SongDTO songDto = new SongDTO(song, movie);
+				searchSongList.add(songDto);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new DBException(e, "Sorry. Cannot get searched song list from db");
+		} finally {
+			ConnectionUtil.close(pst, connection);
+		}
+		return searchSongList;
 	}
 
 	/**
@@ -123,7 +174,7 @@ public class SongDAO {
 	 * @return
 	 * @throws DBException
 	 */
-	public static byte[] getSongSrc(String songName) throws DBException {
+	public byte[] getSongSrc(String songName) throws DBException {
 		byte[] songSource = null;
 		Connection connection = null;
 		PreparedStatement pst = null;
@@ -138,100 +189,46 @@ public class SongDAO {
 				songSource = result.getBytes(1);
 			}
 		} catch (SQLException | ClassNotFoundException e) {
-			throw new DBException(e, "Sorry. Cannot get song from db");
+			throw new DBException(e, "Sorry. Cannot get song source from db");
 		} finally {
 			ConnectionUtil.close(result, pst, connection);
 		}
 		return songSource;
-
 	}
 
 	/**
-	 * This method is used to check whether the song is present in songs db or not
-	 * for search song feature and returns number of results available for searched
-	 * keyword
+	 * This method is used to get song details of searched song
 	 *
 	 * @param songName
-	 * @return
-	 */
-	public static Integer isSongPresent(Song songName) {
-		Connection connection = null;
-		PreparedStatement pst = null;
-		ResultSet result = null;
-		Integer hasSong = null;
-		try {
-			connection = ConnectionUtil.getConnection();
-			String sql = "SELECT COUNT(song_name) FROM songs WHERE LOWER(song_name) LIKE  '%"
-					+ songName.getSongName().toLowerCase() + "%'";
-			pst = connection.prepareStatement(sql);
-			result = pst.executeQuery();
-			while (result.next()) {
-				hasSong = result.getInt(1);
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			Logger.println(e);
-		} finally {
-			ConnectionUtil.close(pst, connection);
-		}
-		return hasSong;
-	}
-
-	/**
-	 * This method gives the list of songs available in db for the searched keyword
-	 *
-	 * @param songName
-	 * @return
-	 */
-	public static List<SongDTO> searchSongList(Song songName) {
-		List<SongDTO> searchSongList = new ArrayList<>();
-		Connection connection = null;
-		PreparedStatement pst = null;
-		ResultSet result = null;
-		try {
-			connection = ConnectionUtil.getConnection();
-			String sql = "SELECT song_name FROM songs WHERE LOWER(song_name) LIKE  '%"
-					+ songName.getSongName().toLowerCase() + "%'";
-			pst = connection.prepareStatement(sql);
-			result = pst.executeQuery();
-			while (result.next()) {
-				String song = result.getString("song_name");
-				SongDTO songDto = new SongDTO(song);
-				searchSongList.add(songDto);
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			Logger.println(e);
-		} finally {
-			ConnectionUtil.close(pst, connection);
-		}
-		return searchSongList;
-	}
-
-	/**
-	 * This method is used to get song's banner image source drom db
-	 *
-	 * @param imageName
 	 * @return
 	 * @throws DBException
 	 */
-	public static byte[] getSongImageSrc(String imageName) throws DBException {
-		byte[] songImageSource = null;
+	public SongDTO getSearchSongDetails(String songName) throws DBException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		ResultSet result = null;
+		SongDTO songDto = null;
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "select song_image from songs where song_name=?";
+			String sql = "SELECT songs.song_name,songs.singers,movies.movie,movies.music_director,movies.movie_release_date from movies INNER JOIN songs on movies.movie_id=songs.movie_id WHERE song_name=?";
 			pst = connection.prepareStatement(sql);
-			pst.setString(1, imageName);
+			pst.setString(1, songName);
 			result = pst.executeQuery();
 			while (result.next()) {
-				songImageSource = result.getBytes(1);
+				String song = result.getString("song_name");
+				String movie = result.getString("movie");
+				String musicDirector = result.getString("music_director");
+				String singers = result.getString("singers");
+				Date movieReleaseDate = result.getDate("movie_release_date");
+
+				songDto = new SongDTO(song, movie, musicDirector, singers, movieReleaseDate);
 			}
-		} catch (SQLException | ClassNotFoundException e) {
-			throw new DBException(e, "Sorry. Cannot get song Image from db");
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new DBException(e, "Sorry. Cannot get Song details from db");
 		} finally {
-			ConnectionUtil.close(result, pst, connection);
+			ConnectionUtil.close(pst, connection);
 		}
-		return songImageSource;
+		return songDto;
 	}
+
 }

@@ -25,8 +25,8 @@ public class MovieServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String movieId = request.getParameter("movies");
-			response.sendRedirect("Song.jsp?movieId=" + movieId);
+			String movieName = request.getParameter("movies");
+			response.sendRedirect("AlbumServlet?movieName=" + movieName);
 		} catch (IOException e) {
 			Logger.println(e);
 		}

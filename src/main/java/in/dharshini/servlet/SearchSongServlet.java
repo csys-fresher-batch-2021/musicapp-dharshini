@@ -11,40 +11,54 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import in.dharshini.dto.SongDTO;
+import in.dharshini.model.Movie;
 import in.dharshini.model.Song;
+import in.dharshini.service.MovieService;
 import in.dharshini.service.SongService;
+import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
 @WebServlet("/SearchSongServlet")
 public class SearchSongServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * This doGet() is used to get song from Searchsong.jsp and get its song link
-	 * from database and redirect to searchsong.jsp
-	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-		String searchedSong = request.getParameter("song");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String searchedSongOrMovie = request.getParameter("search");
 		String errorMessage = "Sorry. No Results Found. Please make sure your words are spelled correctly or use less or different keywords";
-
+		String movieName = null;
+		String songName = null;
 		SongService songService = new SongService();
-		Song songName = new Song(searchedSong);
+		MovieService movieService = new MovieService();
 
-		Integer hasSong = songService.isSongPresent(songName);
-		String noOfSearchResult = Integer.toString(hasSong);
+		Song songOrMovieName = new Song(searchedSongOrMovie);
+		List<SongDTO> searchSongList;
+		List<Movie> searchMovieList;
 		try {
-			if (hasSong > 0) {
-				List<SongDTO> searchSongList = songService.getSearchSongList(songName);
-				RequestDispatcher rd = request.getRequestDispatcher("SearchSong.jsp");
-				request.setAttribute("noOfSearchResult", noOfSearchResult);
+			searchSongList = songService.searchSongList(songOrMovieName);
+			searchMovieList = movieService.searchMovieList(searchedSongOrMovie);
+			if (searchSongList != null || searchMovieList != null) {
+				for (SongDTO song : searchSongList) {
+					songName = song.getSongName();
+					movieName = song.getMovieName();
+					break;
+				}
 				request.setAttribute("searchSongList", searchSongList);
+				request.setAttribute("searchMovieList", searchMovieList);
+
+				request.setAttribute("songName", songName);
+				request.setAttribute("movieName", movieName);
+				request.setAttribute("errorMessage", errorMessage);
+
+				RequestDispatcher rd = request.getRequestDispatcher("SearchSong.jsp");
 				rd.forward(request, response);
-			} else {
-				response.sendRedirect("SearchSong.jsp?errorMessage=" + errorMessage);
 			}
-		} catch (IOException | ServletException e) {
+		} catch (IOException | DBException e) {
 			Logger.println(e);
 		}
+
 	}
+
 }

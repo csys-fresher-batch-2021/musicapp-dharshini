@@ -3,9 +3,7 @@ package in.dharshini.service;
 import java.util.List;
 
 import in.dharshini.dao.PlaylistDAO;
-import in.dharshini.dao.UserDAO;
 import in.dharshini.model.Playlist;
-import in.dharshini.model.User;
 import in.dharshini.userexception.DBException;
 
 public class PlaylistService {
@@ -50,18 +48,6 @@ public class PlaylistService {
 	}
 
 	/**
-	 * This method gets the particular user_id with the help of email from users db
-	 *
-	 * @param mailId
-	 * @return
-	 * @throws DBException
-	 */
-	public User getUserId(User mailId) throws DBException {
-		UserDAO userDao = new UserDAO();
-		return (userDao.getParticularUserId(mailId));
-	}
-
-	/**
 	 * This method gets the list of all playlist songs from db
 	 *
 	 * @param userId
@@ -87,8 +73,9 @@ public class PlaylistService {
 	 *
 	 * @param idAndSong
 	 * @return
+	 * @throws DBException
 	 */
-	public boolean removePlaylistSong(Playlist idAndSong) {
+	public boolean removePlaylistSong(Playlist idAndSong) throws DBException {
 		return dao.removePlaylistSong(idAndSong);
 
 	}

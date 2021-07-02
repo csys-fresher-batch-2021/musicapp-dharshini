@@ -21,7 +21,8 @@
 				here</a> <br> <br> 2.To Add/Delete Movies <br /> <a
 				href="AddOrDeleteMovie.jsp">Click here</a> <br> <br> 3.To
 			Add/Delete Songs <br /> <a href="AddOrDeleteSong.jsp">Click here</a>
-			<br> <br>
+			<br> <br> 4.To Add/Delete Genre And Genre Songs <br /> <a
+				href="AddOrDeleteGenreAndSong.jsp">Click here</a> <br> <br>
 		</div>
 	</main>
 </body>

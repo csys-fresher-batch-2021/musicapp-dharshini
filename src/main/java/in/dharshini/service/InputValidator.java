@@ -2,28 +2,25 @@ package in.dharshini.service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.apache.commons.validator.routines.EmailValidator;
 
 import in.dharshini.util.Logger;
 
 public class InputValidator {
 
-	private InputValidator() {
-		// default constructor
-	}
-
 	/**
 	 * This method validates whether both the user input mail id and password is in
 	 * correct format or not
-	 * 
+	 *
 	 * @param inputMailId
 	 * @param inputPassword
 	 * @return
 	 */
-	public static boolean isValidMailIdAndPassword(String inputMailId, String inputPassword) {
+	public boolean isValidMailIdAndPassword(String inputMailId, String inputPassword) {
 		boolean isExist = false;
 		try {
-			if ((InputValidator.isValidEmail(inputMailId)) && (InputValidator.isValidPassword(inputPassword))) {
+			if ((isValidEmail(inputMailId)) && (isValidPassword(inputPassword))) {
 				isExist = true;
 			}
 		} catch (Exception e) {
@@ -35,12 +32,12 @@ public class InputValidator {
 	/**
 	 * This method validates whether the user input mail id is in correct format or
 	 * not
-	 * 
+	 *
 	 * @param newUserEmail
 	 * @return
 	 */
 
-	public static boolean isValidEmail(String newUserMail) {
+	public boolean isValidEmail(String newUserMail) {
 		EmailValidator eValidator = EmailValidator.getInstance();
 		return (eValidator.isValid(newUserMail));
 	}
@@ -48,12 +45,12 @@ public class InputValidator {
 	/**
 	 * This method validates whether the user input password is in correct and
 	 * required format or not
-	 * 
+	 *
 	 * @param newUserPassword
 	 * @return
 	 */
 
-	public static boolean isValidPassword(String newUserPassword) {
+	public boolean isValidPassword(String newUserPassword) {
 		Matcher matcher;
 		boolean isValid = false;
 		try {
@@ -74,7 +71,7 @@ public class InputValidator {
 	/**
 	 * This Method validates whether user input select is in correct format or not
 	 */
-	public static boolean verifyUserInput(String inputLanguage) {
+	public boolean verifyUserInput(String inputLanguage) {
 		boolean isValid = true;
 		if (inputLanguage == null || inputLanguage.trim().equals("") || inputLanguage.trim().matches("[^A-Za-z]")) {
 			isValid = false;

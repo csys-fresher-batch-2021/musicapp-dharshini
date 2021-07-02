@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import in.dharshini.service.ImageUtilityService;
+import in.dharshini.service.MovieService;
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
@@ -25,8 +25,8 @@ public class SongImageUtilitiesServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String imageName = request.getParameter("imageName");
 		try {
-			ImageUtilityService service = new ImageUtilityService();
-			byte[] indexImageSrc = service.getSongImageSrc(imageName);
+			MovieService service = new MovieService();
+			byte[] indexImageSrc = service.getMovieImageSrc(imageName);
 			OutputStream obj = response.getOutputStream();
 			obj.write(indexImageSrc);
 		} catch (DBException | IOException e) {
