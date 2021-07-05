@@ -78,7 +78,7 @@ public class MovieService {
 	 * @return
 	 * @throws DBException
 	 */
-	public List<Movie> searchMovieList(String movieName) throws DBException {
+	public List<Movie> searchMovieList(Movie movieName) throws DBException {
 		return movieDao.searchMovieList(movieName);
 	}
 

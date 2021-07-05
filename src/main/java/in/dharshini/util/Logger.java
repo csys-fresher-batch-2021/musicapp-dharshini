@@ -13,5 +13,4 @@ public class Logger {
 	public static void println(Exception e) {
 		System.out.println(e);
 	}
-
 }

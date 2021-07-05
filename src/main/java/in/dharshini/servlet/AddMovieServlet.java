@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +18,7 @@ import javax.servlet.http.Part;
 import in.dharshini.model.Movie;
 import in.dharshini.service.MovieService;
 import in.dharshini.userexception.DBException;
+import in.dharshini.util.Logger;
 
 /**
  * Servlet implementation class AddMovieServlet
@@ -57,14 +57,14 @@ public class AddMovieServlet extends HttpServlet {
 			MovieService mService = new MovieService();
 			isDone = mService.addMovies(movie);
 			if (isDone) {
-				request.setAttribute("message", message);
-				RequestDispatcher rd = request.getRequestDispatcher("AddOrDeleteMovie.jsp");
-				rd.forward(request, response);
+				response.sendRedirect("AddOrDeleteMovie.jsp?message=" + message);
 			}
 		} catch (NumberFormatException | IOException | DBException e) {
-			request.setAttribute("errorMessage", errorMessage);
-			RequestDispatcher rd = request.getRequestDispatcher("AddOrDeleteMovie.jsp");
-			rd.forward(request, response);
+			try {
+				response.sendRedirect("AddOrDeleteMovie.jsp?errorMessage=" + errorMessage);
+			} catch (IOException e1) {
+				Logger.println(e1);
+			}
 		}
 	}
 

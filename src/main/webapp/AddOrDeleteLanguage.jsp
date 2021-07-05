@@ -37,7 +37,7 @@ p1 {
 					onclick="removeLanguage()">Remove</button>
 				<br /> <br />
 				<%
-				String errorMessage = (String) request.getAttribute("errorMessage");
+				String errorMessage = (String) request.getParameter("errorMessage");
 				if (errorMessage != null) {
 					String encodedString = Encode.forHtml(errorMessage);
 					out.println("<p>" + encodedString + "</p>");

@@ -60,12 +60,12 @@ p1 {
 					<button class="btn btn-secondary">Add</button>
 					<br />
 					<%
-					String errorMessage = (String) request.getAttribute("errorMessage");
+					String errorMessage = (String) request.getParameter("errorMessage");
 					if (errorMessage != null) {
 						String encodedString = Encode.forHtml(errorMessage);
 						out.println("<p>" + encodedString + "</p>");
 					} else {
-						String message = (String) request.getAttribute("message");
+						String message = (String) request.getParameter("message");
 						if (message != null) {
 							String encodedString = Encode.forHtml(message);
 							out.println("<p1>" + encodedString + "</p1>");

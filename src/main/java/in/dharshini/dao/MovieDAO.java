@@ -143,17 +143,16 @@ public class MovieDAO {
 	 * @param movieName
 	 * @return
 	 */
-	public List<Movie> searchMovieList(String movieName) throws DBException {
+	public List<Movie> searchMovieList(Movie movieName) throws DBException {
 		List<Movie> searchMovieList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pst = null;
 		ResultSet result = null;
 		try {
 			connection = ConnectionUtil.getConnection();
-
-			String sql = "SELECT movie,music_director FROM movies WHERE LOWER(movie) LIKE  '" + movieName.toLowerCase()
-					+ "%'";
+			String sql = "SELECT movie,music_director FROM movies WHERE LOWER(movie) LIKE  ?";
 			pst = connection.prepareStatement(sql);
+			pst.setString(1, movieName.getMovieName().toLowerCase() + "%");
 			result = pst.executeQuery();
 			while (result.next()) {
 				String movie = result.getString(MOVIE);

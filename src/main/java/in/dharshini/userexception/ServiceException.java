@@ -5,7 +5,7 @@ public class ServiceException extends Exception {
 
 	/**
 	 * This method gives errorMessage
-	 * 
+	 *
 	 * @param message
 	 */
 	public ServiceException(String message) {
@@ -13,8 +13,8 @@ public class ServiceException extends Exception {
 	}
 
 	/**
-	 * This method gives error message and stackTrace
-	 * 
+	 * This method gives error message for stackTrace
+	 *
 	 * @param e
 	 * @param message
 	 */

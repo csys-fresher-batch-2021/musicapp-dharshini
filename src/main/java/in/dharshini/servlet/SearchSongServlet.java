@@ -33,12 +33,14 @@ public class SearchSongServlet extends HttpServlet {
 		SongService songService = new SongService();
 		MovieService movieService = new MovieService();
 
-		Song songOrMovieName = new Song(searchedSongOrMovie);
+		Song songKeyword = new Song(searchedSongOrMovie);
+		Movie MovieKeyword = new Movie(searchedSongOrMovie);
+
 		List<SongDTO> searchSongList;
 		List<Movie> searchMovieList;
 		try {
-			searchSongList = songService.searchSongList(songOrMovieName);
-			searchMovieList = movieService.searchMovieList(searchedSongOrMovie);
+			searchSongList = songService.searchSongList(songKeyword);
+			searchMovieList = movieService.searchMovieList(MovieKeyword);
 			if (searchSongList != null || searchMovieList != null) {
 				int index = 0;
 				for (SongDTO song : searchSongList) {

@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +17,7 @@ import javax.servlet.http.Part;
 import in.dharshini.model.Song;
 import in.dharshini.service.SongService;
 import in.dharshini.userexception.DBException;
+import in.dharshini.util.Logger;
 
 /**
  * Servlet implementation class AddSongServlet
@@ -25,7 +25,6 @@ import in.dharshini.userexception.DBException;
 @MultipartConfig
 @WebServlet("/AddSongServlet")
 public class AddSongServlet extends HttpServlet {
-
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -64,11 +63,12 @@ public class AddSongServlet extends HttpServlet {
 				response.sendRedirect("AddOrDeleteSong.jsp?errorMessage=Song Already Exist");
 			}
 		} catch (DBException | IOException | ServletException e) {
-			request.setAttribute("errorMessage", errorMessage);
-			RequestDispatcher rd = request.getRequestDispatcher("AddOrDeleteSong.jsp");
-			rd.forward(request, response);
+			try {
+				response.sendRedirect("AddOrDeleteSong.jsp?errorMessage=" + errorMessage);
+			} catch (IOException e1) {
+				Logger.println(e1);
+			}
 		}
-
 	}
 
 	/**
