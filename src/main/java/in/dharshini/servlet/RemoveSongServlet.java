@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.dharshini.model.Song;
 import in.dharshini.service.SongService;
+import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
 /**
@@ -25,9 +26,8 @@ public class RemoveSongServlet extends HttpServlet {
 		String songName = request.getParameter("song");
 		Song song = new Song(songName);
 		boolean isDone = false;
-		String errorMessage1 = "Cannot remove song. Song Does Not Exist";
+		String errorMessage1 = "Cannot remove song.";
 		String message1 = "Successfully Removed";
-
 		try {
 			SongService songService = new SongService();
 			isDone = songService.removeSongs(song);
@@ -36,7 +36,7 @@ public class RemoveSongServlet extends HttpServlet {
 			} else {
 				response.sendRedirect("AddOrDeleteSong.jsp?errorMessage=" + errorMessage1);
 			}
-		} catch (IOException e) {
+		} catch (IOException | DBException e) {
 			Logger.println(e);
 		}
 	}

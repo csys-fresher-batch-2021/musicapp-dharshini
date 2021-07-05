@@ -14,24 +14,22 @@
 }
 
 body {
-	background-image: url("ImageUtilitiesServlet?imageName=Login-Image");
-	background-repeat: no-repeat;
-	background-size: 103% 150%;
+	background-color: #1affa3;
 }
 </style>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<main class="container-fluid">
 
 
-		<div class="center">
-			<h1 style="color: darkturquoise">Enjoy Your Favourite Music</h1>
+		<div class=" main center">
+			<h1 style="color: deeppink">Enjoy Your Favourite Music</h1>
 			<br />
 			<h2 style="color: purple">List Of Available Languages</h2>
 			<br />
 			<%
-			List<Language> languageList = LanguageDAO.getAllLanguages();
+			LanguageDAO languageDao = new LanguageDAO();
+			List<Language> languageList = languageDao.getAllLanguages();
 			%>
 
 			<form action="LanguageServlet">
@@ -49,7 +47,6 @@ body {
 			</form>
 		</div>
 
-	</main>
 
 </body>
 </html>

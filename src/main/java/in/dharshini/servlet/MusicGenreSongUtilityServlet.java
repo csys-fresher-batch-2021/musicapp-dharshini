@@ -14,10 +14,10 @@ import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
 /**
- * Servlet implementation class SongUtilitiesServlet
+ * Servlet implementation class MusicGenreSongUtilityServlet
  */
-@WebServlet("/SongUtilitiesServlet")
-public class SongUtilitiesServlet extends HttpServlet {
+@WebServlet("/MusicGenreSongUtilityServlet")
+public class MusicGenreSongUtilityServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -27,7 +27,7 @@ public class SongUtilitiesServlet extends HttpServlet {
 
 		try {
 			SongService songService = new SongService();
-			byte[] songSrc = songService.getSongFile(songName);
+			byte[] songSrc = songService.getMusicGenreSongSrc(songName);
 			OutputStream obj = response.getOutputStream();
 			obj.write(songSrc);
 		} catch (IOException | DBException e) {

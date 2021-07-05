@@ -2,9 +2,9 @@ package in.dharshini.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet;
 
 public class ConnectionUtil {
 	private ConnectionUtil() {
@@ -18,7 +18,7 @@ public class ConnectionUtil {
 
 	/**
 	 * This method is used to get Connection to the db
-	 * 
+	 *
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
@@ -31,7 +31,7 @@ public class ConnectionUtil {
 
 	/**
 	 * This method is used to close statement and connection
-	 * 
+	 *
 	 * @param st
 	 * @param con
 	 */
@@ -50,7 +50,7 @@ public class ConnectionUtil {
 
 	/**
 	 * This method is used to close resultSet, statement, connection
-	 * 
+	 *
 	 * @param rs
 	 * @param st
 	 * @param con

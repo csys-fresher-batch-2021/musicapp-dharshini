@@ -72,7 +72,7 @@ public class PlaylistDAO {
 	}
 
 	/**
-	 * This method is used to get the list of all
+	 * This method is used to get the list of all songs in playlist
 	 *
 	 * @param userId
 	 * @return
@@ -103,6 +103,11 @@ public class PlaylistDAO {
 
 	}
 
+	/**
+	 * This method is used to clear all songs from playlist
+	 *
+	 * @param userId
+	 */
 	public void clearPlaylist(Playlist userId) {
 		Connection connection = null;
 		PreparedStatement pst = null;
@@ -119,7 +124,14 @@ public class PlaylistDAO {
 		}
 	}
 
-	public boolean removePlaylistSong(Playlist idAndSong) {
+	/**
+	 * This method is used to delete particaular song from playlist
+	 *
+	 * @param idAndSong
+	 * @return
+	 * @throws DBException
+	 */
+	public boolean removePlaylistSong(Playlist idAndSong) throws DBException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		boolean isremoved = false;
@@ -132,7 +144,7 @@ public class PlaylistDAO {
 			pst.executeUpdate();
 			isremoved = true;
 		} catch (SQLException | ClassNotFoundException e) {
-			Logger.println(e);
+			throw new DBException(e, "Sorry. Cannot remove playlist song from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}

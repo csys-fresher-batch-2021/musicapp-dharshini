@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import in.dharshini.model.User;
-import in.dharshini.service.LoginService;
-import in.dharshini.service.PlaylistService;
+import in.dharshini.service.UserService;
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
@@ -32,35 +31,35 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String emailId = request.getParameter("emailid");
 		String password = request.getParameter("password");
-
+		UserService loginService = new UserService();
 		Integer userId = null;
-		User mail = new User(emailId);
-		PlaylistService pService = new PlaylistService();
-		try {
-			User userIdObj = pService.getUserId(mail);
-			userId = userIdObj.getUserId();
-		} catch (DBException e1) {
-			Logger.println(e1);
-		}
+		Integer age = null;
 
 		HttpSession session = request.getSession();
 		User user = new User(emailId, password);
-		boolean isValid = LoginService.loginDetailCheck(user);
+		boolean isValid = loginService.loginDetailCheck(user);
 		if (isValid) {
+			User mail = new User(emailId);
+			UserService userService = new UserService();
 			try {
-				session.setAttribute("LOGGED_IN_USER", emailId);
+				User userIdObj = userService.getParticularUserDetails(mail);
+				session.setAttribute("LOGGED_IN_USER", userIdObj.getFirstName());
+				userId = userIdObj.getUserId();
+				age = userIdObj.getAge();
+				session.setAttribute("age", age);
 				session.setAttribute("userId", userId);
-				response.sendRedirect("Language.jsp");
-			} catch (Exception e) {
+				response.sendRedirect("HomeServlet");
+			} catch (IOException | DBException e) {
 				Logger.println(e);
 			}
 		} else {
 			try {
 				String errormessage = "Invalid Login Credentials";
 				response.sendRedirect("Login.jsp?errormessage=" + errormessage);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				Logger.println(e);
 			}
 		}
+
 	}
 }

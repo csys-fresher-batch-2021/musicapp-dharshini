@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import in.dharshini.model.Playlist;
 import in.dharshini.service.PlaylistService;
+import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
 /**
@@ -36,7 +37,7 @@ public class RemovePlaylistServlet extends HttpServlet {
 			} else {
 				response.sendRedirect("PlaylistServlet?errorMessage=" + errorMessage);
 			}
-		} catch (IOException e) {
+		} catch (IOException | DBException e) {
 			Logger.println(e);
 		}
 	}

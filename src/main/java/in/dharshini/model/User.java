@@ -4,6 +4,16 @@ public class User {
 	private Integer userId;
 	private String mailId;
 	private String password;
+	private String firstName;
+	private Integer age;
+
+	public User(String firstName, String mailId, String password, Integer age) {
+		super();
+		this.firstName = firstName;
+		this.mailId = mailId;
+		this.password = password;
+		this.age = age;
+	}
 
 	public User(Integer userId, String mailId, String password) {
 		super();
@@ -17,15 +27,33 @@ public class User {
 		this.mailId = mailId;
 	}
 
-	public User(String mailId, String password) {
+	public User(Integer userId, String firstName, Integer age) {
 		super();
+		this.userId = userId;
+		this.firstName = firstName;
+		this.age = age;
+
+	}
+
+	public User(String mailId, String password) {
 		this.mailId = mailId;
 		this.password = password;
 	}
 
-	public User(Integer userId) {
-		super();
-		this.userId = userId;
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
 	public Integer getUserId() {

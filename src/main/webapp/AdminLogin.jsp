@@ -5,6 +5,8 @@
 <html lang="en">
 
 <head>
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <title>MusicApp</title>
 <style>
 .center {
@@ -18,11 +20,11 @@ f {
 </style>
 </head>
 <body>
-	<jsp:include page="header.jsp"></jsp:include>
 
 	<main>
 		<div class="center">
 			<form method="POST" action="AdminServlet">
+			<h2 style="color:#1affa3">DJ Musicz</h2>
 				<h3>Admin Login</h3>
 				<br /> <label>Email Id</label> <input type="email"
 					placeholder="Enter Valid Emailid" name="adminEmail" id="adminEmail"

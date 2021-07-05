@@ -10,7 +10,6 @@ import java.util.Map;
 import in.dharshini.model.User;
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.ConnectionUtil;
-import in.dharshini.util.Logger;
 
 public class UserDAO {
 
@@ -25,16 +24,17 @@ public class UserDAO {
 		PreparedStatement pst = null;
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "insert into users(email,password) values (?,?)";
+			String sql = "insert into users(first_name,email,password,age) values (?,?,?,?)";
 
 			pst = connection.prepareStatement(sql);
-			pst.setString(1, user.getMailId());
-			pst.setString(2, user.getPassword());
-
+			pst.setString(1, user.getFirstName());
+			pst.setString(2, user.getMailId());
+			pst.setString(3, user.getPassword());
+			pst.setInt(4, user.getAge());
 			pst.executeUpdate();
 
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new DBException(e, "Unable to add new user in db");
+			throw new DBException(e, "Sorry. Cannot add user details into db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
@@ -46,7 +46,7 @@ public class UserDAO {
 	 * @param user
 	 * @return
 	 */
-	public boolean updatePassword(User user) {
+	public boolean updatePassword(User user) throws DBException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		boolean isUpdated = false;
@@ -61,7 +61,7 @@ public class UserDAO {
 			pst.executeUpdate();
 			isUpdated = true;
 		} catch (ClassNotFoundException | SQLException e) {
-			Logger.println(e);
+			throw new DBException(e, "Sorry. Cannot update user password in db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
@@ -104,26 +104,31 @@ public class UserDAO {
 	 * @return
 	 * @throws DBException
 	 */
-	public User getParticularUserId(User mailId) throws DBException {
-		User userId = null;
+	public User getParticularUserDetails(User mailId) throws DBException {
+		User userIdAndName = null;
 		Connection connection = null;
 		PreparedStatement pst = null;
 		Integer userid = null;
+		Integer age = null;
+		String name = null;
+
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "select user_id from users where email=?";
+			String sql = "select user_id,first_name,age from users where email=?";
 			pst = connection.prepareStatement(sql);
 			pst.setString(1, mailId.getMailId());
 			ResultSet result = pst.executeQuery();
 			while (result.next()) {
 				userid = result.getInt("user_id");
-				userId = new User(userid);
+				name = result.getString("first_name");
+				age = result.getInt("age");
+				userIdAndName = new User(userid, name, age);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			throw new DBException(e, "Sorry. Cannot get user id from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
-		return userId;
+		return userIdAndName;
 	}
 }

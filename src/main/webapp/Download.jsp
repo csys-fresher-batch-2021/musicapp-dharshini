@@ -13,50 +13,43 @@
 	text-align: center;
 	padding: 70px 0;
 }
-
-.c {
-	font-size: 150%;
-}
-
 body {
-	background-image: url("ImageUtilitiesServlet?imageName=Play-Image");
-	background-repeat: no-repeat;
-	background-size: 103% 200%;
+	background-color: #1affa3;
 }
 </style>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<main class="container-fluid">
 
-		<form>
-			<div class="center">
-				<h3 style="color: darkslateblue">Enjoy Your Favourite Song
-					Online</h3>
-				<br />
-				<%
-				String songName = request.getParameter("songName");
-				%>
-				<audio controls autoplay>
-					<source
-						src="SongUtilitiesServlet?songName=<%=songName%>"
-						type="audio/ogg">
-					<source
-						src="SongUtilitiesServlet?songName=<%=songName%>"
-						type="audio/mpeg">
-				</audio>
-				<br />
-				<br />
-				<div class="c">
-					<img
-						src="SongImageUtilitiesServlet?imageName=<%=songName%>"
-						alt="<%=songName%>" width="400" height="333"><br /> Song
-					Name:
-					<%=songName%>
-				</div>
-				<br />
+	<form>
+		<div class="main center">
+			<h3 style="color: darkslateblue">Enjoy Your Favourite Song
+				Online</h3>
+			<br />
+			<%
+			SongDTO SongDetailsList = (SongDTO) request.getAttribute("songDetails");
+			%>
+			<audio controls autoplay>
+				<source src="SongUtilitiesServlet?songName=<%=SongDetailsList.getSongName()%>"
+					type="audio/ogg">
+				<source src="SongUtilitiesServlet?songName=<%=SongDetailsList.getSongName()%>"
+					type="audio/mpeg">
+			</audio>
+			<br /> <br />
+			<div class="c">
+				<img
+					src="SongImageUtilitiesServlet?imageName=<%=SongDetailsList.getMovieName()%>"
+					alt="<%=SongDetailsList.getMovieName()%>" width="300" height="200"><br />
+				Movie Name:
+				<%=SongDetailsList.getMovieName()%>
+				<br /> Song Name:
+				<%=SongDetailsList.getSongName()%><br/>
+				Music Director: <%=SongDetailsList.getMusicDirector()%><br/>
+				Playback Singers: <%=SongDetailsList.getSingers()%><br/>
+				Movie Releaes Date: <%=SongDetailsList.getMovieReleasedDate() %>
 			</div>
-		</form>
-	</main>
+			<br />
+		</div>
+	</form>
 </body>
 </html>

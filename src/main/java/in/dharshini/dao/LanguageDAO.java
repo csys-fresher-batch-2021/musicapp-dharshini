@@ -10,20 +10,17 @@ import java.util.List;
 import in.dharshini.model.Language;
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.ConnectionUtil;
-import in.dharshini.util.Logger;
 
 public class LanguageDAO {
-	private LanguageDAO() {
-		// Default constructor
-	}
 
 	/**
 	 * This method is used to add languages to the db
 	 *
 	 * @param languageName
 	 * @return
+	 * @throws DBException
 	 */
-	public static boolean addLanguages(Language languageName) {
+	public boolean addLanguages(Language languageName) throws DBException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		boolean isDone = false;
@@ -37,7 +34,7 @@ public class LanguageDAO {
 
 			isDone = true;
 		} catch (ClassNotFoundException | SQLException e) {
-			Logger.println(e);
+			throw new DBException(e, "Sorry. Cannot add language into db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
@@ -50,7 +47,7 @@ public class LanguageDAO {
 	 * @return
 	 * @throws DBException
 	 */
-	public static List<Language> getAllLanguages() throws DBException {
+	public List<Language> getAllLanguages() throws DBException {
 		List<Language> languageList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pst = null;
@@ -79,8 +76,9 @@ public class LanguageDAO {
 	 *
 	 * @param languageName
 	 * @return
+	 * @throws DBException
 	 */
-	public static boolean removeLanguages(Language languageName) {
+	public boolean removeLanguages(Language languageName) throws DBException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		boolean isDone = false;
@@ -94,7 +92,7 @@ public class LanguageDAO {
 
 			isDone = true;
 		} catch (ClassNotFoundException | SQLException e) {
-			Logger.println(e);
+			throw new DBException(e, "Sorry. Cannot remove language from db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}

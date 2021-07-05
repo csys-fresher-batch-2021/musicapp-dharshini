@@ -1,66 +1,51 @@
 package in.dharshini.model;
 
+import java.io.File;
+
 public class Song {
 	private Integer songId;
-	private String songLink;
 	private String songName;
+
 	private Integer languageid;
 	private Integer movieId;
-	private String songFile;
-	private String songImage;
+	private File songFile;
+	private String singers;
 
-	public Song(Integer languageid, Integer movieId, String songName, String songFile, String songImage) {
+	public Song(Integer languageid, Integer movieId, String songName, String singers, File songFile) {
 		super();
 		this.languageid = languageid;
 		this.movieId = movieId;
 		this.songName = songName;
+		this.singers = singers;
 		this.songFile = songFile;
-		this.songImage = songImage;
 	}
 
-	public Song(Integer languageid, Integer movieId, String songName, String songLink) {
+	public Song(Integer languageid, Integer movieId, String songName) {
 		super();
 		this.songName = songName;
 		this.languageid = languageid;
 		this.movieId = movieId;
-		this.songLink = songLink;
-	}
-
-	public Song(String songLink, String songName) {
-		super();
-		this.songLink = songLink;
-		this.songName = songName;
-
 	}
 
 	public Song(String songName) {
 		super();
 		this.songName = songName;
-
 	}
 
-	public String getSongFile() {
+	public String getSingers() {
+		return singers;
+	}
+
+	public void setSingers(String singers) {
+		this.singers = singers;
+	}
+
+	public File getSongFile() {
 		return songFile;
 	}
 
-	public void setSongFile(String songFile) {
+	public void setSongFile(File songFile) {
 		this.songFile = songFile;
-	}
-
-	public String getSongImage() {
-		return songImage;
-	}
-
-	public void setSongImage(String songImage) {
-		this.songImage = songImage;
-	}
-
-	public String getSongLink() {
-		return songLink;
-	}
-
-	public void setSongLink(String songLink) {
-		this.songLink = songLink;
 	}
 
 	public Song(String songName, Integer songId) {

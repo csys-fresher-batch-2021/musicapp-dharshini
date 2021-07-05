@@ -10,10 +10,6 @@ import in.dharshini.util.ConnectionUtil;
 
 public class UtilitiesDAO {
 
-	private UtilitiesDAO() {
-		// Default Constructor
-	}
-
 	/**
 	 * This method is used to get image source used for styling purposes
 	 *
@@ -21,7 +17,7 @@ public class UtilitiesDAO {
 	 * @return
 	 * @throws DBException
 	 */
-	public static byte[] getStyleImageSrc(String imageName) throws DBException {
+	public byte[] getStyleImageSrc(String imageName) throws DBException {
 		byte[] imageSource = null;
 		Connection connection = null;
 		PreparedStatement pst = null;

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import in.dharshini.model.User;
-import in.dharshini.service.LoginService;
+import in.dharshini.service.UserService;
 import in.dharshini.userexception.DBException;
 import in.dharshini.userexception.ServiceException;
 
@@ -30,7 +30,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 		boolean isUpdated = false;
 		User user = null;
 		user = new User(emailId, password);
-		LoginService loginService = new LoginService();
+		UserService loginService = new UserService();
 		try {
 			isUpdated = loginService.updatePassword(user);
 			if (isUpdated) {

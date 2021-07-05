@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.dharshini.model.Language;
 import in.dharshini.service.LanguageService;
+import in.dharshini.userexception.DBException;
 import in.dharshini.util.Logger;
 
 /**
@@ -19,28 +20,26 @@ import in.dharshini.util.Logger;
 public class AddLanguageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * This doGet() is used to get language parameter from AddLanguage.jsp and adds
-	 * that language into database
-	 *
-	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		LanguageService languageService = new LanguageService();
 		String languageName = request.getParameter("language");
 		Language langName = new Language(languageName);
 		boolean isDone = false;
-		String errorMessage = "Cannot add language. Language already Exists";
+		String errorMessage = "Cannot add language.Check Input Details";
 		String message = "Successfully added";
 		try {
-			isDone = LanguageService.addLanguage(langName);
+			isDone = languageService.addLanguage(langName);
 			if (isDone) {
 				response.sendRedirect("AddOrDeleteLanguage.jsp?message=" + message);
-			} else {
-				response.sendRedirect("AddOrDeleteLanguage.jsp?errorMessage=" + errorMessage);
 			}
-		} catch (IOException e) {
-			Logger.println(e);
+		} catch (IOException | DBException e) {
+			try {
+				response.sendRedirect("AddOrDeleteLanguage.jsp?errorMessage=" + errorMessage);
+			} catch (IOException e1) {
+				Logger.println(e1);
+			}
 		}
 	}
 }
