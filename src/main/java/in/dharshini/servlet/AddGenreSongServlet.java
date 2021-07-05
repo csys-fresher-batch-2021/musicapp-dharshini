@@ -27,49 +27,52 @@ import in.dharshini.util.Logger;
 public class AddGenreSongServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String ERROR_MESSAGE = "AddOrDeleteGenreAndSong.jsp?errorMessage=Cannot Add Genre Song. Check Input Details";
+	private static final String ERROR_MESSAGE2 = "AddOrDeleteGenreAndSong.jsp?errorMessage=Song Already Exists";
 	private static final String ERROR_MESSAGE1 = "AddOrDeleteGenreAndSong.jsp?errorMessage=Cannot add Genre.Check Input Details";
-	private static final String INFO_MESSAGE = "AddOrDeleteGenreAndSong.jsp?errorMessage=Successfully added";
+	private static final String INFO_MESSAGE = "AddOrDeleteGenreAndSong.jsp?message=Successfully added";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		SongService songService = new SongService();
-		boolean isDone = false;
+		String songName = request.getParameter("songName");
+		if (songName != null) {
+			try {
+				boolean isDone = false;
+				String musicDirector = request.getParameter("musicDirector");
+				Integer genreId = Integer.parseInt(request.getParameter("genreId"));
+				String singers = request.getParameter("singers");
+				if (!songService.isGenreSongPresent(songName)) {
+					final Part songPart = request.getPart("songFile");
+					final String songFileName = getFileName(songPart);
+					String fileLocation = getServletContext().getInitParameter("upload.location");
+					if (fileLocation == null || "null".equals(fileLocation)) {
+						fileLocation = "E:/MusicAppProjectUploads";
+					}
+					File uploads = new File(fileLocation + File.separator + songFileName);
 
-		try {
-			String songName = request.getParameter("songName");
-			String musicDirector = request.getParameter("musicDirector");
-			Integer genreId = Integer.parseInt(request.getParameter("genreId"));
-			String singers = request.getParameter("singers");
-			if (!songService.isGenreSongPresent(songName)) {
-				final Part songPart = request.getPart("songFile");
-				final String songFileName = getFileName(songPart);
-				String fileLocation = getServletContext().getInitParameter("upload.location");
-				if (fileLocation == null || "null".equals(fileLocation)) {
-					fileLocation = "E:/MusicAppProjectUploads";
-				}
-				File uploads = new File(fileLocation + File.separator + songFileName);
-
-				InputStream in = songPart.getInputStream();
-				Files.copy(in, uploads.toPath(), StandardCopyOption.REPLACE_EXISTING);
-				in.close();
-				MusicGenre songDetails = new MusicGenre(songName, musicDirector, genreId, singers, uploads);
-				isDone = songService.addGenreSong(songDetails);
-				if (isDone) {
-					response.sendRedirect(INFO_MESSAGE);
+					InputStream in = songPart.getInputStream();
+					Files.copy(in, uploads.toPath(), StandardCopyOption.REPLACE_EXISTING);
+					in.close();
+					MusicGenre songDetails = new MusicGenre(songName, musicDirector, genreId, singers, uploads);
+					isDone = songService.addGenreSong(songDetails);
+					if (isDone) {
+						response.sendRedirect(INFO_MESSAGE);
+					} else {
+						response.sendRedirect(ERROR_MESSAGE);
+					}
 				} else {
-					response.sendRedirect(ERROR_MESSAGE);
+					response.sendRedirect(ERROR_MESSAGE2);
 				}
-			} else {
-				response.sendRedirect(ERROR_MESSAGE);
+			} catch (NumberFormatException | IOException | DBException e) {
+				Logger.println(e);
 			}
-		} catch (NumberFormatException | IOException | DBException e) {
-			Logger.println(e);
 		}
 
 		String genre = request.getParameter("genre");
 		if (genre != null) {
 			try {
+				boolean isDone = false;
 				isDone = songService.addGenre(genre);
 				if (isDone) {
 					response.sendRedirect(INFO_MESSAGE);

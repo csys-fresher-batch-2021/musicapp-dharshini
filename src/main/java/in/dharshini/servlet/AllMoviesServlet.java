@@ -36,7 +36,7 @@ public class AllMoviesServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.print(json);
 			out.flush();
-		} catch (DBException e) {
+		} catch (IOException | DBException e) {
 			Logger.println(e);
 		}
 	}

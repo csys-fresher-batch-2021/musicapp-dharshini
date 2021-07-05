@@ -83,7 +83,7 @@ p1 {
 					<button class="btn btn-danger">Remove</button>
 					<br /> <br />
 					<%
-					String errorMessage1 = (String) request.getParameter("errorMessage");
+					String errorMessage1 = (String) request.getAttribute("errorMessage");
 					if (errorMessage1 != null) {
 						String encodedString1 = Encode.forHtml(errorMessage1);
 						out.println("<p>" + encodedString1 + "</p>");

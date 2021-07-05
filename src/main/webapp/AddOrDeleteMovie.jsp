@@ -48,7 +48,7 @@ p1 {
 			<div class="center">
 				<h3>Add Movie</h3>
 				<div class="border1">
-					<label>Language Id</label> <input type="text" name="languageId"
+					<label>Language Id</label> <input type="number" name="languageId"
 						id="languageId" autofocus required /> <br /> <br /> <label>Movie
 						Name</label> <input type="text" name="movie" id="movie" required /><br />
 					<br /> <label>Music Director</label> <input type="text"
@@ -60,13 +60,12 @@ p1 {
 					<button class="btn btn-secondary">Add</button>
 					<br />
 					<%
-					String errorMessage = (String) request.getParameter("errorMessage");
-
+					String errorMessage = (String) request.getAttribute("errorMessage");
 					if (errorMessage != null) {
 						String encodedString = Encode.forHtml(errorMessage);
 						out.println("<p>" + encodedString + "</p>");
 					} else {
-						String message = (String) request.getParameter("message");
+						String message = (String) request.getAttribute("message");
 						if (message != null) {
 							String encodedString = Encode.forHtml(message);
 							out.println("<p1>" + encodedString + "</p1>");

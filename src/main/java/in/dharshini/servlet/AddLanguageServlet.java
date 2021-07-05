@@ -2,6 +2,7 @@ package in.dharshini.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +35,9 @@ public class AddLanguageServlet extends HttpServlet {
 				response.sendRedirect("AddOrDeleteLanguage.jsp?message=" + message);
 			}
 		} catch (IOException | DBException e) {
-			response.sendRedirect("AddOrDeleteLanguage.jsp?errorMessage=" + errorMessage);
+			request.setAttribute("errorMessage", errorMessage);
+			RequestDispatcher rd = request.getRequestDispatcher("AddOrDeleteLanguage.jsp");
+			rd.forward(request, response);
 		}
 	}
 }

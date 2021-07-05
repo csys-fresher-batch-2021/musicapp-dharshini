@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -63,7 +64,9 @@ public class AddSongServlet extends HttpServlet {
 				response.sendRedirect("AddOrDeleteSong.jsp?errorMessage=Song Already Exist");
 			}
 		} catch (DBException | IOException | ServletException e) {
-			response.sendRedirect("AddOrDeleteSong.jsp?errorMessage=" + errorMessage);
+			request.setAttribute("errorMessage", errorMessage);
+			RequestDispatcher rd = request.getRequestDispatcher("AddOrDeleteSong.jsp");
+			rd.forward(request, response);
 		}
 
 	}

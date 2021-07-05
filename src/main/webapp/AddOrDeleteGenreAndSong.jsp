@@ -42,14 +42,13 @@ p1 {
 <body>
 	<jsp:include page="AdminHeader.jsp"></jsp:include>
 	<main class="container-fluid">
-		<form method="POST">
+		<form  method="POST">
 			<div class="center">
 				<h3>Add/Delete Genre</h3>
 				<label>Genre To Be Updated</label> <input type="text" name="genre"
 					id="genre" required  /><br /> <br />
-				<button class="btn btn-secondary" type="button" onclick="addGenre()">Add</button>
-
-				<button class="btn btn-danger" type="button" onclick="removeGenre()">Remove</button>
+				<button class="btn btn-secondary"type="button" onclick = "addGenre()">Add</button>
+				<button class="btn btn-danger" type="button" onclick = "removeGenre()" >Remove</button>
 				<br /> <br />
 				<%
 				String errorMessage = (String) request.getParameter("errorMessage");
@@ -123,7 +122,7 @@ p1 {
 			</div>
 		</form>
 
-		<script>
+		 <script>
 			function addGenre() {
 				let genre = document.getElementById('genre').value;
 				document.location.href = "AddGenreSongServlet?genre=" + genre;

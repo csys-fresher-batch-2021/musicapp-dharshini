@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -33,12 +34,13 @@ public class AddMovieServlet extends HttpServlet {
 
 		String errorMessage = "Cannot Add Movie. Check Input Details";
 		String message = "Successfully added";
-		Integer languageId = Integer.parseInt(request.getParameter("languageId"));
-		String movieName = request.getParameter("movie");
-		String musicDirector = request.getParameter("musicDirector");
-		String movieDate = request.getParameter("movieReleaseDate");
-		Date movieReleaseDate = Date.valueOf(movieDate);
+
 		try {
+			Integer languageId = Integer.parseInt(request.getParameter("languageId"));
+			String movieName = request.getParameter("movie");
+			String musicDirector = request.getParameter("musicDirector");
+			String movieDate = request.getParameter("movieReleaseDate");
+			Date movieReleaseDate = Date.valueOf(movieDate);
 			final Part imagePart = request.getPart("movieImageFile");
 			final String imageFileName = getFileName(imagePart);
 			String fileLocation = getServletContext().getInitParameter("upload.location");
@@ -55,10 +57,14 @@ public class AddMovieServlet extends HttpServlet {
 			MovieService mService = new MovieService();
 			isDone = mService.addMovies(movie);
 			if (isDone) {
-				response.sendRedirect("AddOrDeleteMovie.jsp?message=" + message);
+				request.setAttribute("message", message);
+				RequestDispatcher rd = request.getRequestDispatcher("AddOrDeleteMovie.jsp");
+				rd.forward(request, response);
 			}
 		} catch (NumberFormatException | IOException | DBException e) {
-			response.sendRedirect("AddOrDeleteMovie.jsp?errorMessage=" + errorMessage);
+			request.setAttribute("errorMessage", errorMessage);
+			RequestDispatcher rd = request.getRequestDispatcher("AddOrDeleteMovie.jsp");
+			rd.forward(request, response);
 		}
 	}
 
