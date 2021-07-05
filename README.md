@@ -1,7 +1,7 @@
 # MusicApp - (DJ Musicz)
 #### Description
 ```
-This Project is an online music app. Users can listen songs online and download songs.
+This Project is an online music app. Users can listen songs online.
 ```
 #### Features
 
