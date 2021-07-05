@@ -47,9 +47,9 @@ p1 {
 			<div class="center">
 				<h2>Add Movie Song</h2>
 				<div class="border1">
-					<label>Language Id</label> <input type="text" name="languageId"
+					<label>Language Id</label> <input type="number" name="languageId"
 						id="languageId" required  /> <br /> <br /> <label>Movie
-						Id</label> <input type="text" name="movieId" id="movieId" required /> <br />
+						Id</label> <input type="number" name="movieId" id="movieId" required /> <br />
 					<br /> <label>Song Name</label> <input type="text" name="songName"
 						id="songName" required /><br /> <br /> <label>Singers</label> <input
 						type="text" name="singers" id="singers" required /><br /> <br />

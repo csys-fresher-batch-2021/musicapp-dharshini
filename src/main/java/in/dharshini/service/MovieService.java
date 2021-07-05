@@ -1,5 +1,6 @@
 package in.dharshini.service;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,8 @@ import in.dharshini.model.MusicGenre;
 import in.dharshini.userexception.DBException;
 
 public class MovieService {
-
+	private static final String MELODY = "Melody";
+	private static final String ILAYARAAJA_HITS = "Ilayaraaja_hits";
 	MovieDAO movieDao = new MovieDAO();
 	MusicGenreDAO musicGenreDao = new MusicGenreDAO();
 
@@ -20,6 +22,7 @@ public class MovieService {
 	 *
 	 * @param movieName
 	 * @throws DBException
+	 * @throws FileNotFoundException
 	 */
 	public boolean addMovies(Movie movieName) throws DBException {
 		return movieDao.addMovies(movieName);
@@ -122,16 +125,16 @@ public class MovieService {
 			genreList.add("Kids");
 		} else if (age > 7 && age <= 15) {
 			genreList.add("Folk");
-			genreList.add("Melody");
+			genreList.add(MELODY);
 		} else if (age > 15 && age <= 25) {
-			genreList.add("Melody");
-			genreList.add("Ilayaraaja Hits");
+			genreList.add(MELODY);
+			genreList.add(ILAYARAAJA_HITS);
 			genreList.add("Folk");
 		} else if (age > 25 && age <= 50) {
-			genreList.add("Melody");
-			genreList.add("Ilayaraaja Hits");
+			genreList.add(MELODY);
+			genreList.add(ILAYARAAJA_HITS);
 		} else if (age >= 50) {
-			genreList.add("Ilayaraaja Hits");
+			genreList.add(ILAYARAAJA_HITS);
 			genreList.add("60s And 70s Hits");
 		}
 		return musicGenreDao.getRecommendedGenre(genreList);

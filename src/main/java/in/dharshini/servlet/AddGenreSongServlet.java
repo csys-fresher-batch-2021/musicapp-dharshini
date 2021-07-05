@@ -26,20 +26,21 @@ import in.dharshini.util.Logger;
 @WebServlet("/AddGenreSongServlet")
 public class AddGenreSongServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String ERROR_MESSAGE = "AddOrDeleteGenreAndSong.jsp?errorMessage=Cannot Add Genre Song. Check Input Details";
+	private static final String ERROR_MESSAGE1 = "AddOrDeleteGenreAndSong.jsp?errorMessage=Cannot add Genre.Check Input Details";
+	private static final String INFO_MESSAGE = "AddOrDeleteGenreAndSong.jsp?errorMessage=Successfully added";
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String errorMessage = "Cannot Add Genre Song. Check Input Details";
-		String message = "Successfully added";
 		SongService songService = new SongService();
 		boolean isDone = false;
 
-		String songName = request.getParameter("songName");
-		String musicDirector = request.getParameter("musicDirector");
-		Integer genreId = Integer.parseInt(request.getParameter("genreId"));
-		String singers = request.getParameter("singers");
 		try {
+			String songName = request.getParameter("songName");
+			String musicDirector = request.getParameter("musicDirector");
+			Integer genreId = Integer.parseInt(request.getParameter("genreId"));
+			String singers = request.getParameter("singers");
 			if (!songService.isGenreSongPresent(songName)) {
 				final Part songPart = request.getPart("songFile");
 				final String songFileName = getFileName(songPart);
@@ -55,12 +56,12 @@ public class AddGenreSongServlet extends HttpServlet {
 				MusicGenre songDetails = new MusicGenre(songName, musicDirector, genreId, singers, uploads);
 				isDone = songService.addGenreSong(songDetails);
 				if (isDone) {
-					response.sendRedirect("AddOrDeleteGenreAndSong.jsp?message=" + message);
+					response.sendRedirect(INFO_MESSAGE);
 				} else {
-					response.sendRedirect("AddOrDeleteGenreAndSong.jsp?errorMessage=" + errorMessage);
+					response.sendRedirect(ERROR_MESSAGE);
 				}
 			} else {
-				response.sendRedirect("AddOrDeleteGenreAndSong.jsp?errorMessage=" + errorMessage);
+				response.sendRedirect(ERROR_MESSAGE);
 			}
 		} catch (NumberFormatException | IOException | DBException e) {
 			Logger.println(e);
@@ -68,14 +69,12 @@ public class AddGenreSongServlet extends HttpServlet {
 
 		String genre = request.getParameter("genre");
 		if (genre != null) {
-			String errorMessage1 = "Cannot add Genre.Check Input Details";
-			String message1 = "Successfully added";
 			try {
 				isDone = songService.addGenre(genre);
 				if (isDone) {
-					response.sendRedirect("AddOrDeleteGenreAndSong.jsp?message=" + message1);
+					response.sendRedirect(INFO_MESSAGE);
 				} else {
-					response.sendRedirect("AddOrDeleteGenreAndSong.jsp?errorMessage=" + errorMessage1);
+					response.sendRedirect(ERROR_MESSAGE1);
 				}
 			} catch (IOException | DBException e) {
 				Logger.println(e);

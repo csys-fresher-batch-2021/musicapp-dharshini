@@ -15,8 +15,10 @@ import in.dharshini.model.Movie;
 import in.dharshini.model.Song;
 import in.dharshini.userexception.DBException;
 import in.dharshini.util.ConnectionUtil;
+import in.dharshini.util.Logger;
 
 public class SongDAO {
+	private static final String SONG_NAME = "song_name";
 
 	/**
 	 * This method is used to add songs src and details to db
@@ -42,6 +44,7 @@ public class SongDAO {
 			pst.executeUpdate();
 			isDone = true;
 		} catch (ClassNotFoundException | IOException | SQLException e) {
+			Logger.println(e);
 			throw new DBException(e, "Sorry. Cannot add Song into db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
@@ -122,7 +125,7 @@ public class SongDAO {
 			pst.setString(1, movieName.getMovieName());
 			ResultSet result = pst.executeQuery();
 			while (result.next()) {
-				String songName = result.getString("song_name");
+				String songName = result.getString(SONG_NAME);
 				Song song = new Song(songName);
 				songsList.add(song);
 			}
@@ -154,7 +157,7 @@ public class SongDAO {
 
 			result = pst.executeQuery();
 			while (result.next()) {
-				String song = result.getString("song_name");
+				String song = result.getString(SONG_NAME);
 				String movie = result.getString("movie");
 				SongDTO songDto = new SongDTO(song, movie);
 				searchSongList.add(songDto);
@@ -215,7 +218,7 @@ public class SongDAO {
 			pst.setString(1, songName);
 			result = pst.executeQuery();
 			while (result.next()) {
-				String song = result.getString("song_name");
+				String song = result.getString(SONG_NAME);
 				String movie = result.getString("movie");
 				String musicDirector = result.getString("music_director");
 				String singers = result.getString("singers");

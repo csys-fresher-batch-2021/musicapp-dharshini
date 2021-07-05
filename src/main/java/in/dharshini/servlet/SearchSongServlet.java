@@ -40,10 +40,14 @@ public class SearchSongServlet extends HttpServlet {
 			searchSongList = songService.searchSongList(songOrMovieName);
 			searchMovieList = movieService.searchMovieList(searchedSongOrMovie);
 			if (searchSongList != null || searchMovieList != null) {
+				int index = 0;
 				for (SongDTO song : searchSongList) {
+					index++;
 					songName = song.getSongName();
 					movieName = song.getMovieName();
-					break;
+					if (index == 1) {
+						break;
+					}
 				}
 				request.setAttribute("searchSongList", searchSongList);
 				request.setAttribute("searchMovieList", searchMovieList);

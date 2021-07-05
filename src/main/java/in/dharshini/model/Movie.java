@@ -1,17 +1,18 @@
 package in.dharshini.model;
 
+import java.io.File;
 import java.sql.Date;
 
 public class Movie {
 
 	private String movieName;
-	private String movieImage;
+	private File movieImage;
 	private String musicDirector;
 	private Date movieReleaseDate;
 	private Integer movieId;
 	private Integer languageId;
 
-	public Movie(Integer languageId, String movieName, String musicDirector, Date movieReleaseDate, String movieImage) {
+	public Movie(Integer languageId, String movieName, String musicDirector, Date movieReleaseDate, File movieImage) {
 		super();
 		this.languageId = languageId;
 		this.movieName = movieName;
@@ -20,7 +21,7 @@ public class Movie {
 		this.movieImage = movieImage;
 	}
 
-	public Movie(Integer languageId, String movieName, String movieImage) {
+	public Movie(Integer languageId, String movieName, File movieImage) {
 		super();
 		this.languageId = languageId;
 		this.movieName = movieName;
@@ -63,11 +64,11 @@ public class Movie {
 		this.musicDirector = musicDirector;
 	}
 
-	public String getMovieImage() {
+	public File getMovieImage() {
 		return movieImage;
 	}
 
-	public void setMovieImage(String movieImage) {
+	public void setMovieImage(File movieImage) {
 		this.movieImage = movieImage;
 	}
 

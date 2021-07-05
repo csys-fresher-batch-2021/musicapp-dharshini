@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import in.dharshini.model.Language;
 import in.dharshini.service.LanguageService;
 import in.dharshini.userexception.DBException;
-import in.dharshini.util.Logger;
 
 /**
  * Servlet implementation class RemoveLanguageServlet
@@ -34,12 +33,9 @@ public class RemoveLanguageServlet extends HttpServlet {
 			isDone = languageService.removeLanguage(langName);
 			if (isDone) {
 				response.sendRedirect("AddOrDeleteLanguage.jsp?message=" + message);
-			} else {
-				response.sendRedirect("AddOrDeleteLanguage.jsp?errorMessage=" + errorMessage);
 			}
 		} catch (IOException | DBException e) {
-			Logger.println(e);
+			response.sendRedirect("AddOrDeleteLanguage.jsp?errorMessage=" + errorMessage);
 		}
-
 	}
 }

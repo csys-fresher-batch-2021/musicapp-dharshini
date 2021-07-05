@@ -44,7 +44,7 @@ p1 {
 	<jsp:include page="AdminHeader.jsp"></jsp:include>
 	<main class="container-fluid">
 
-		<form action="AddMovieServlet">
+		<form action="AddMovieServlet" enctype="multipart/form-data" method="Post" >
 			<div class="center">
 				<h3>Add Movie</h3>
 				<div class="border1">
@@ -55,7 +55,7 @@ p1 {
 						name="musicDirector" id="musicDirector" required /><br /> <br /> <label>Movie
 						Release Date</label> <input type="date" name="movieReleaseDate" id="movieReleaseDate"
 						required /><br /> <br /> <label>Movie Poster Image</label> <input
-						type="file" name="movieImage" id="movieImage" accept=".jpg" required /><br />
+						type="file" name="movieImageFile" id="movieImageFile" accept=".jpg" required /><br />
 					<br />
 					<button class="btn btn-secondary">Add</button>
 					<br />

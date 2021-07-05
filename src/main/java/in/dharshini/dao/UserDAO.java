@@ -108,7 +108,8 @@ public class UserDAO {
 		User userIdAndName = null;
 		Connection connection = null;
 		PreparedStatement pst = null;
-		Integer userid = null, age = null;
+		Integer userid = null;
+		Integer age = null;
 		String name = null;
 
 		try {

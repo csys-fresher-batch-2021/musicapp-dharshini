@@ -25,19 +25,22 @@ public class MusicGenreServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Integer genreId = Integer.parseInt(request.getParameter("genreId"));
 		String genreName = null;
 		SongService service = new SongService();
 		try {
+			Integer genreId = Integer.parseInt(request.getParameter("genreId"));
 			List<MusicGenre> genreSongList = service.getGenreSongList(genreId);
 			request.setAttribute("list", genreSongList);
+			int index = 0;
 			for (MusicGenre genre : genreSongList) {
+				index++;
 				genreName = genre.getGenre();
-				break;
+				if (index == 1) {
+					break;
+				}
 			}
 			request.setAttribute("genre", genreName);
 			request.setAttribute("genreId", genreId);
-
 			RequestDispatcher rd = request.getRequestDispatcher("MusicGenre.jsp");
 			rd.forward(request, response);
 		} catch (IOException | DBException e) {

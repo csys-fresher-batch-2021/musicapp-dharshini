@@ -25,12 +25,12 @@ public class RegistrationServlet extends HttpServlet {
 			throws ServletException, IOException {
 		UserService loginService = new UserService();
 
-		String firstName = request.getParameter("fName");
-		Integer age = Integer.parseInt(request.getParameter("age"));
-		String newMail = request.getParameter("email");
-		String newPassword = request.getParameter("password");
-		User user = new User(firstName, newMail, newPassword, age);
 		try {
+			String firstName = request.getParameter("fName");
+			Integer age = Integer.parseInt(request.getParameter("age"));
+			String newMail = request.getParameter("email");
+			String newPassword = request.getParameter("password");
+			User user = new User(firstName, newMail, newPassword, age);
 			boolean isValid = loginService.checkNotRegisteredUser(user);
 			if (isValid) {
 				response.sendRedirect("Login.jsp");
@@ -38,7 +38,7 @@ public class RegistrationServlet extends HttpServlet {
 				String errormessage = "Already registered User or Invalid Registration Credentials";
 				response.sendRedirect("Registration.jsp?errormessage=" + errormessage);
 			}
-		} catch (DBException | IOException e) {
+		} catch (NumberFormatException | DBException | IOException e) {
 			Logger.println(e);
 		}
 	}

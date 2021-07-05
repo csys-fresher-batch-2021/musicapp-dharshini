@@ -1,6 +1,5 @@
 package in.dharshini.dao;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,20 +16,20 @@ import in.dharshini.util.ConnectionUtil;
 
 public class MovieDAO {
 	private static final String MOVIE = "movie";
-	private final String MUSIC_DIRECTOR = "music_director";
+	private static final String MUSIC_DIRECTOR = "music_director";
 
 	/**
 	 * This Method is used to add movies to db
 	 *
 	 * @param movieName
 	 * @return
+	 * @throws DBException
 	 */
 	public boolean addMovies(Movie movieName) throws DBException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		boolean isDone = false;
-		File movieImageSource = new File("E:\\musicapp-dharshini\\ProjectUtilities\\" + movieName.getMovieImage());
-		try (FileInputStream fisObj1 = new FileInputStream(movieImageSource)) {
+		try (FileInputStream fisObj1 = new FileInputStream(movieName.getMovieImage())) {
 			connection = ConnectionUtil.getConnection();
 			String sql = "insert into movies (language_id,movie,music_director,movie_release_date,movie_img) values (?,?,?,?,?)";
 			pst = connection.prepareStatement(sql);
@@ -42,7 +41,7 @@ public class MovieDAO {
 			pst.executeUpdate();
 			isDone = true;
 		} catch (ClassNotFoundException | SQLException | IOException e) {
-			throw new DBException(e, "Sorry. Cannot add movie to db");
+			throw new DBException(e, "Sorry. Cannot add movie into db");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}

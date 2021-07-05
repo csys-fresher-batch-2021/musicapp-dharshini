@@ -48,7 +48,7 @@ public class RemoveGenreSongServlet extends HttpServlet {
 			String message = "Successfully removed";
 			try {
 				isDone = songService.removeGenre(genre);
-				if (isDone == true) {
+				if (isDone) {
 					response.sendRedirect("AddOrDeleteGenreAndSong.jsp?message=" + message);
 				} else {
 					response.sendRedirect("AddOrDeleteGenreAndSong.jsp?errorMessage=" + errorMessage);

@@ -17,7 +17,6 @@ import javax.servlet.http.Part;
 import in.dharshini.model.Song;
 import in.dharshini.service.SongService;
 import in.dharshini.userexception.DBException;
-import in.dharshini.util.Logger;
 
 /**
  * Servlet implementation class AddSongServlet
@@ -37,11 +36,11 @@ public class AddSongServlet extends HttpServlet {
 		SongService songService = new SongService();
 		boolean isDone = false;
 
-		Integer languageId = Integer.parseInt(request.getParameter("languageId"));
-		Integer movieId = Integer.parseInt(request.getParameter("movieId"));
-		String songName = request.getParameter("songName");
-		String singers = request.getParameter("singers");
 		try {
+			Integer languageId = Integer.parseInt(request.getParameter("languageId"));
+			Integer movieId = Integer.parseInt(request.getParameter("movieId"));
+			String songName = request.getParameter("songName");
+			String singers = request.getParameter("singers");
 			if (!songService.isSongPresent(songName)) {
 				final Part songPart = request.getPart("songFile");
 				final String songFileName = getFileName(songPart);
@@ -59,14 +58,12 @@ public class AddSongServlet extends HttpServlet {
 				isDone = songService.addSong(songDetails);
 				if (isDone) {
 					response.sendRedirect("AddOrDeleteSong.jsp?message=" + message);
-				} else {
-					response.sendRedirect("AddOrDeleteSong.jsp?errorMessage=" + errorMessage);
 				}
 			} else {
-				response.sendRedirect("AddOrDeleteSong.jsp?errorMessage=" + errorMessage);
+				response.sendRedirect("AddOrDeleteSong.jsp?errorMessage=Song Already Exist");
 			}
 		} catch (DBException | IOException | ServletException e) {
-			Logger.println(e);
+			response.sendRedirect("AddOrDeleteSong.jsp?errorMessage=" + errorMessage);
 		}
 
 	}

@@ -15,6 +15,7 @@ import in.dharshini.userexception.DBException;
 import in.dharshini.util.ConnectionUtil;
 
 public class MusicGenreDAO {
+	private static final String GENRE = "genre";
 
 	/**
 	 * This method is used to add languages to the db
@@ -179,7 +180,7 @@ public class MusicGenreDAO {
 				String songName = result.getString("song_name");
 				String musicDirector = result.getString("music_director");
 				String singers = result.getString("singers");
-				String genre = result.getString("genre");
+				String genre = result.getString(GENRE);
 				MusicGenre genreList = new MusicGenre(songName, musicDirector, singers, genre);
 				genreSongList.add(genreList);
 			}
@@ -237,7 +238,7 @@ public class MusicGenreDAO {
 			pst = connection.prepareStatement(sql);
 			ResultSet result = pst.executeQuery();
 			while (result.next()) {
-				String genreName = result.getString("genre");
+				String genreName = result.getString(GENRE);
 				Integer genreId = result.getInt("genre_id");
 
 				MusicGenre musicGenre = new MusicGenre(genreName, genreId);
@@ -270,7 +271,7 @@ public class MusicGenreDAO {
 				pst.setString(1, genre);
 				ResultSet result = pst.executeQuery();
 				while (result.next()) {
-					String genreName = result.getString("genre");
+					String genreName = result.getString(GENRE);
 					Integer genreId = result.getInt("genre_id");
 					MusicGenre musicGenre = new MusicGenre(genreName, genreId);
 					recommendedGenreList.add(musicGenre);

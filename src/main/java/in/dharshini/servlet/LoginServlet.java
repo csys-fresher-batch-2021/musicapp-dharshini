@@ -32,7 +32,8 @@ public class LoginServlet extends HttpServlet {
 		String emailId = request.getParameter("emailid");
 		String password = request.getParameter("password");
 		UserService loginService = new UserService();
-		Integer userId = null, age = null;
+		Integer userId = null;
+		Integer age = null;
 
 		HttpSession session = request.getSession();
 		User user = new User(emailId, password);

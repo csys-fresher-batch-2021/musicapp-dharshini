@@ -42,7 +42,7 @@ p1 {
 <body>
 	<jsp:include page="AdminHeader.jsp"></jsp:include>
 	<main class="container-fluid">
-		<form>
+		<form method="POST">
 			<div class="center">
 				<h3>Add/Delete Genre</h3>
 				<label>Genre To Be Updated</label> <input type="text" name="genre"
